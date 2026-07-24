@@ -1,0 +1,61 @@
+openapi: 3.0.3
+info:
+  description: You can use Admin API to create and manage your Human API users
+  version: 1.0.0
+  title: admin connect API
+  termsOfService: https://www.humanapi.co/developer-terms
+  contact:
+    email: help@humanapi.co
+    url: https://www.humanapi.co/contact
+servers:
+- url: https://admin.humanapi.co
+  description: Production server
+security:
+- bearerAuth: []
+tags:
+- name: connect
+paths:
+  /v1/connect/token:
+    post:
+      tags:
+      - connect
+      description: Public method for connect to generate tokens
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/connectTokenPayload'
+      responses:
+        '200':
+          description: OK
+components:
+  schemas:
+    connectTokenPayload:
+      type: object
+      required:
+      - client_id
+      - client_user_id
+      - type
+      properties:
+        client_id:
+          type: string
+        client_user_id:
+          type: string
+        client_secret:
+          type: string
+        client_user_email:
+          type: string
+        type:
+          type: string
+        extra_scopes:
+          type: array
+          items:
+            type: string
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+x-readme:
+  explorer-enabled: true
+  proxy-enabled: true

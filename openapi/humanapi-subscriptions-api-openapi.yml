@@ -1,0 +1,252 @@
+openapi: 3.0.3
+info:
+  description: You can use Admin API to create and manage your Human API users
+  version: 1.0.0
+  title: admin subscriptions API
+  termsOfService: https://www.humanapi.co/developer-terms
+  contact:
+    email: help@humanapi.co
+    url: https://www.humanapi.co/contact
+servers:
+- url: https://admin.humanapi.co
+  description: Production server
+security:
+- bearerAuth: []
+tags:
+- name: subscriptions
+paths:
+  /api/v1/subscriptions:
+    get:
+      tags:
+      - subscriptions
+      description: Find a subscription
+      parameters:
+      - $ref: '#/components/parameters/clientUserId'
+      - $ref: '#/components/parameters/subscriberEmail'
+      - $ref: '#/components/parameters/role'
+      - $ref: '#/components/parameters/offset'
+      - $ref: '#/components/parameters/limit'
+      - $ref: '#/components/parameters/query'
+      - $ref: '#/components/parameters/sort'
+      operationId: getUsersSubscriptions
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/subscription'
+        '401':
+          $ref: '#/components/responses/unauthorized'
+        '404':
+          $ref: '#/components/responses/notFound'
+    post:
+      tags:
+      - subscriptions
+      description: Create a new subscription
+      operationId: createSubscription
+      requestBody:
+        description: Subscription details to add to the system
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/subscription'
+            examples:
+              createNewSubscription:
+                summary: Create a user and send an invitation email
+                value:
+                  clientUserId: whateverIdValueYouWant
+                  subscriberEmail: agent@acme.co
+                  subscriberFirstName: Jane
+                  subscriberLastName: Doe
+                  subscriberOffice: nw676
+                  role: producer
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/subscription'
+        '401':
+          $ref: '#/components/responses/unauthorized'
+        '404':
+          $ref: '#/components/responses/notFound'
+        '409':
+          $ref: '#/components/responses/conflict'
+  /api/v1/subscriptions/{subscriptionId}:
+    get:
+      tags:
+      - subscriptions
+      description: Get the details of a specific subscription (by subscription id)
+      operationId: getSubscriptionDetails
+      parameters:
+      - $ref: '#/components/parameters/subscriptionIdPath'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/subscription'
+        '401':
+          $ref: '#/components/responses/unauthorized'
+        '404':
+          $ref: '#/components/responses/notFound'
+    delete:
+      tags:
+      - subscriptions
+      description: Delete a specific subscription (by subscription id)
+      operationId: deleteSubscription
+      parameters:
+      - $ref: '#/components/parameters/subscriptionIdPath'
+      responses:
+        '200':
+          description: OK
+components:
+  responses:
+    conflict:
+      description: There is a conflict with the specified resource (e.g. it may already exist)
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/error'
+          example:
+            code: 409
+            error: Conflict
+            message: Unable to match the login of the new user to an existing user found for that user
+            x-humanapi-request-id: 05518ca2-1c9a-434e-8512-7284bbc54137
+    notFound:
+      description: The specified resource was not found (e.g. the id does not exist)
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/error'
+          example:
+            code: 404
+            error: Not Found
+            message: Not Found
+            x-humanapi-request-id: 05518ca2-1c9a-434e-8512-7284bbc54137
+    unauthorized:
+      description: The token provided is invalid. It may have expired or may have been revoked.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/error'
+          example:
+            code: 401
+            error: Unauthorized
+            message: Cannot authenticate you with this token
+            x-humanapi-request-id: 05518ca2-1c9a-434e-8512-7284bbc54137
+  parameters:
+    role:
+      name: role
+      in: query
+      description: The role that the subscription is bound to.
+      required: true
+      schema:
+        type: string
+        enum:
+        - producer
+    subscriberEmail:
+      name: subscriberEmail
+      in: query
+      description: The email that the subscription is bound to
+      required: true
+      schema:
+        type: string
+    query:
+      name: query
+      in: query
+      description: The search string for pagination
+      required: false
+      schema:
+        type: string
+    subscriptionIdPath:
+      name: subscriptionId
+      in: path
+      description: The subscriptionId of the user
+      required: true
+      schema:
+        type: string
+    clientUserId:
+      name: clientUserId
+      in: query
+      description: The clientUserId of user.
+      required: true
+      schema:
+        type: string
+    limit:
+      name: limit
+      in: query
+      description: The max number of records to return in one query
+      required: false
+      schema:
+        type: integer
+        format: int32
+        default: 50
+    sort:
+      name: sort
+      in: query
+      description: The sort option for pagination
+      required: false
+      schema:
+        type: string
+    offset:
+      name: offset
+      in: query
+      description: The index of the first record to return
+      required: false
+      schema:
+        type: integer
+        format: int32
+        default: 0
+  schemas:
+    subscription:
+      type: object
+      required:
+      - clientUserId
+      - subscriberEmail
+      - role
+      properties:
+        clientUserId:
+          type: string
+        subscriberEmail:
+          type: string
+        role:
+          type: string
+        subscriberOffice:
+          type: string
+        subscriberFirstName:
+          type: string
+        subscriberLastName:
+          type: string
+    error:
+      type: object
+      required:
+      - statusCode
+      - error
+      - message
+      - x-humanapi-request-id
+      properties:
+        code:
+          type: integer
+          format: int32
+        error:
+          type: string
+        message:
+          type: string
+        x-humanapi-request-id:
+          type: string
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+x-readme:
+  explorer-enabled: true
+  proxy-enabled: true

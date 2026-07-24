@@ -1,0 +1,110 @@
+openapi: 3.0.3
+info:
+  description: You can use Admin API to create and manage your Human API users
+  version: 1.0.0
+  title: admin resources API
+  termsOfService: https://www.humanapi.co/developer-terms
+  contact:
+    email: help@humanapi.co
+    url: https://www.humanapi.co/contact
+servers:
+- url: https://admin.humanapi.co
+  description: Production server
+security:
+- bearerAuth: []
+tags:
+- name: resources
+paths:
+  /api/v1/resources/consumer-link:
+    post:
+      tags:
+      - resources
+      description: Fetch link to see order's tasks
+      operationId: getTasksLiistLink
+      requestBody:
+        description: User identifier
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/userHumanIdOrClientUserId'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/link'
+              examples:
+                linkCreation:
+                  summary: Link creation
+                  value:
+                    clientId: aaa0020000000000000111111000d00000000002
+                    consumerLink: https://todo.staging.humanapi.co/
+        '401':
+          $ref: '#/components/responses/unauthorized'
+        '404':
+          $ref: '#/components/responses/notFound'
+components:
+  responses:
+    notFound:
+      description: The specified resource was not found (e.g. the id does not exist)
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/error'
+          example:
+            code: 404
+            error: Not Found
+            message: Not Found
+            x-humanapi-request-id: 05518ca2-1c9a-434e-8512-7284bbc54137
+    unauthorized:
+      description: The token provided is invalid. It may have expired or may have been revoked.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/error'
+          example:
+            code: 401
+            error: Unauthorized
+            message: Cannot authenticate you with this token
+            x-humanapi-request-id: 05518ca2-1c9a-434e-8512-7284bbc54137
+  schemas:
+    link:
+      type: object
+      properties:
+        consumerLink:
+          type: string
+        clientId:
+          type: string
+    userHumanIdOrClientUserId:
+      type: object
+      properties:
+        clientUserId:
+          type: string
+        humanId:
+          type: string
+    error:
+      type: object
+      required:
+      - statusCode
+      - error
+      - message
+      - x-humanapi-request-id
+      properties:
+        code:
+          type: integer
+          format: int32
+        error:
+          type: string
+        message:
+          type: string
+        x-humanapi-request-id:
+          type: string
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+x-readme:
+  explorer-enabled: true
+  proxy-enabled: true

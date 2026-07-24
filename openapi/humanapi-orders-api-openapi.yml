@@ -1,0 +1,88 @@
+openapi: 3.0.3
+info:
+  description: You can use Admin API to create and manage your Human API users
+  version: 1.0.0
+  title: admin orders API
+  termsOfService: https://www.humanapi.co/developer-terms
+  contact:
+    email: help@humanapi.co
+    url: https://www.humanapi.co/contact
+servers:
+- url: https://admin.humanapi.co
+  description: Production server
+security:
+- bearerAuth: []
+tags:
+- name: orders
+  description: API endpoints to get orders
+  externalDocs:
+    description: Find out more
+    url: https://reference.humanapi.co/docs/admin-api
+paths:
+  /api/v1/order-types:
+    get:
+      tags:
+      - orders
+      description: Get available order types for the logged in Client App
+      operationId: getOrderTypes
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    orderType:
+                      type: string
+                    orderTypeAlias:
+                      type: string
+                    orderTypeDescription:
+                      type: string
+                  example:
+                    orderType: full
+                    orderTypeAlias: Healthcheck Order
+                    orderTypeDescription: Full patient healthcheck order
+        '500':
+          $ref: '#/components/responses/serverError'
+components:
+  schemas:
+    error:
+      type: object
+      required:
+      - statusCode
+      - error
+      - message
+      - x-humanapi-request-id
+      properties:
+        code:
+          type: integer
+          format: int32
+        error:
+          type: string
+        message:
+          type: string
+        x-humanapi-request-id:
+          type: string
+  responses:
+    serverError:
+      description: There was an internal server error
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/error'
+          example:
+            code: 500
+            error: Internal Server Error
+            message: Internal Server Error
+            x-humanapi-request-id: 05518ca2-1c9a-434e-8512-7284bbc54137
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+x-readme:
+  explorer-enabled: true
+  proxy-enabled: true
