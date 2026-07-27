@@ -1,22 +1,173 @@
 aid: humanapi
 name: HumanAPI
-description: HumanAPI is a company surfaced as a portfolio company of a16z and added to the API Evangelist
-  network as a stub for enrichment. This profile is a lead awaiting the enrichment pipeline.
+description: Human API is a health-intelligence platform that provides real-time, programmatic access
+  to structured digital health and medical data aggregated from providers, labs, pharmacies, devices and
+  wellness apps. Its Admin API lets enterprises (notably life-insurance underwriting) create users, submit
+  data-retrieval orders, connect a member's health-data sources, and fetch generated individual and combined
+  reports, with webhook notifications on order completion. Authentication is a bearer JWT obtained from
+  client-credentials token endpoints. Human API was founded in 2013, backed by a16z, and acquired by LexisNexis
+  Risk Solutions in 2021.
 url: https://raw.githubusercontent.com/api-evangelist/humanapi/refs/heads/main/apis.yml
+accessModel:
+  pricing: unknown
+  onboarding: self-serve
+  trial: false
+  try_now: false
+  public: false
+  label: Self-serve signup
+  confidence: medium
+  source:
+  - authentication
+  generated: '2026-07-22'
+  method: derived
+image: https://github.com/humanapi.png
 x-type: company
 x-source: vc-portfolio
 x-backed-by:
 - a16z
-x-tier: stub
-x-tier-reason: portfolio-lead
+x-tier: enriched
+x-tier-reason: portfolio-lead-enriched
 specificationVersion: '0.20'
 created: '2026-07-17'
-modified: '2026-07-17'
+modified: '2026-07-19'
 tags:
-- Company
-apis: []
+- Health
+- Healthcare
+- Health Data
+- Medical Records
+- Insurance
+- Underwriting
+- Wellness
+- Data Aggregation
+- Reports
+- FHIR-adjacent
+apis:
+- aid: humanapi:humanapi-admin-api
+  name: HumanAPI admin API
+  description: API endpoints to authorize a client app for the Admin API
+  humanURL: https://reference.humanapi.co/reference
+  baseURL: https://admin.humanapi.co
+  tags:
+  - admin
+  properties:
+  - type: OpenAPI
+    url: openapi/humanapi-admin-api-openapi.yml
+- aid: humanapi:humanapi-connect-api
+  name: HumanAPI connect API
+  description: The connect API from HumanAPI — 1 operation(s) for connect.
+  humanURL: https://reference.humanapi.co/reference
+  baseURL: https://admin.humanapi.co
+  tags:
+  - connect
+  properties:
+  - type: OpenAPI
+    url: openapi/humanapi-connect-api-openapi.yml
+- aid: humanapi:humanapi-orders-api
+  name: HumanAPI orders API
+  description: API endpoints to get orders
+  humanURL: https://reference.humanapi.co/reference
+  baseURL: https://admin.humanapi.co
+  tags:
+  - orders
+  properties:
+  - type: OpenAPI
+    url: openapi/humanapi-orders-api-openapi.yml
+- aid: humanapi:humanapi-reports-api
+  name: HumanAPI reports API
+  description: The reports API from HumanAPI — 2 operation(s) for reports.
+  humanURL: https://reference.humanapi.co/reference
+  baseURL: https://admin.humanapi.co
+  tags:
+  - reports
+  properties:
+  - type: OpenAPI
+    url: openapi/humanapi-reports-api-openapi.yml
+- aid: humanapi:humanapi-resources-api
+  name: HumanAPI resources API
+  description: The resources API from HumanAPI — 1 operation(s) for resources.
+  humanURL: https://reference.humanapi.co/reference
+  baseURL: https://admin.humanapi.co
+  tags:
+  - resources
+  properties:
+  - type: OpenAPI
+    url: openapi/humanapi-resources-api-openapi.yml
+- aid: humanapi:humanapi-subscriptions-api
+  name: HumanAPI subscriptions API
+  description: The subscriptions API from HumanAPI — 2 operation(s) for subscriptions.
+  humanURL: https://reference.humanapi.co/reference
+  baseURL: https://admin.humanapi.co
+  tags:
+  - subscriptions
+  properties:
+  - type: OpenAPI
+    url: openapi/humanapi-subscriptions-api-openapi.yml
+- aid: humanapi:humanapi-users-api
+  name: HumanAPI users API
+  description: The users API from HumanAPI — 4 operation(s) for users.
+  humanURL: https://reference.humanapi.co/reference
+  baseURL: https://admin.humanapi.co
+  tags:
+  - users
+  properties:
+  - type: OpenAPI
+    url: openapi/humanapi-users-api-openapi.yml
 maintainers:
 - FN: Kin Lane
   email: kin@apievangelist.com
 - FN: APIs.json
   email: info@apis.io
+common:
+- type: DeveloperPortal
+  url: https://portal.humanapi.co
+- type: Documentation
+  url: https://reference.humanapi.co
+- type: APIReference
+  url: https://reference.humanapi.co/reference
+- type: GettingStarted
+  url: https://reference.humanapi.co/docs/overview
+- type: Support
+  url: https://support.humanapi.co
+- type: Login
+  url: https://portal.humanapi.co
+- type: TermsOfService
+  url: https://www.humanapi.co/developer-terms
+- type: GitHubOrganization
+  url: https://github.com/humanapi
+- type: StatusPage
+  url: https://status.humanapi.co
+- type: LLMsTxt
+  url: llms/humanapi-llms.txt
+- type: Packages
+  url: packages/humanapi-packages.yml
+- type: SDKs
+  url: packages/humanapi-packages.yml
+- type: WellKnown
+  url: well-known/humanapi-well-known.yml
+- type: MCPServer
+  url: mcp/humanapi-mcp.yml
+- type: Authentication
+  url: authentication/humanapi-authentication.yml
+- type: Conformance
+  url: conformance/humanapi-conformance.yml
+- type: ErrorCatalog
+  url: errors/humanapi-problem-types.yml
+- type: Lifecycle
+  url: lifecycle/humanapi-lifecycle.yml
+- type: Conventions
+  url: conventions/humanapi-conventions.yml
+- type: DataModel
+  url: data-model/humanapi-data-model.yml
+- type: Webhooks
+  url: asyncapi/humanapi-notifications-webhooks.yml
+- type: AgentSkill
+  url: skills/_index.yml
+- type: DomainSecurity
+  url: security/humanapi-domain-security.yml
+- type: AgenticAccess
+  url: agentic-access/humanapi-agentic-access.yml
+x-enrichment:
+  date: '2026-07-19'
+  status: backfilled
+  pass: local-v1
+  note: backfilled from .gitignore signal + verified work evidence

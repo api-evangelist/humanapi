@@ -1,0 +1,26 @@
+{
+  "provider": "humanapi",
+  "sources": [
+    "humanapi-admin-api-openapi.yml",
+    "humanapi-connect-api-openapi.yml",
+    "humanapi-orders-api-openapi.yml",
+    "humanapi-reports-api-openapi.yml",
+    "humanapi-resources-api-openapi.yml",
+    "humanapi-subscriptions-api-openapi.yml",
+    "humanapi-users-api-openapi.yml"
+  ],
+  "outputs": [
+    "humanapi-admin-api-openapi.yml",
+    "humanapi-connect-api-openapi.yml",
+    "humanapi-orders-api-openapi.yml",
+    "humanapi-reports-api-openapi.yml",
+    "humanapi-resources-api-openapi.yml",
+    "humanapi-subscriptions-api-openapi.yml",
+    "humanapi-users-api-openapi.yml"
+  ],
+  "archived": [],
+  "errors": [],
+  "warnings": [],
+  "notes": [],
+  "skipped": []
+}

@@ -1,0 +1,45 @@
+generated: '2026-07-19'
+method: derived
+source: openapi/humanapi-admin-openapi.yml
+entities:
+- name: user
+  id_field: humanId
+  description: A member whose health data is aggregated
+- name: provider
+  description: A health-data source (provider/lab/pharmacy/device) linked to a user
+- name: subscription
+  id_field: subscriptionId
+  description: A recipient subscribed to a user's reports
+- name: order
+  id_field: orderId
+  description: A data-retrieval order for a user, producing reports
+- name: report
+  id_field: reportId
+  description: A generated report (individual or combined) for a user
+- name: orderType
+  description: A configured order type available to the client app
+relationships:
+- from: user
+  to: provider
+  type: has_many
+  via: humanId
+- from: user
+  to: subscription
+  type: has_many
+  via: clientUserId
+- from: user
+  to: report
+  type: has_many
+  via: humanId
+- from: order
+  to: user
+  type: belongs_to
+  via: humanId
+- from: order
+  to: report
+  type: has_many
+  via: orderId
+- from: order
+  to: orderType
+  type: belongs_to
+  via: orderType

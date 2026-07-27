@@ -1,0 +1,82 @@
+openapi: 3.0.3
+info:
+  description: Public authentication endpoints for facilitating token exchange with external authentication
+    systems.
+  version: 1.0.0
+  title: HAPI Auth Public
+  termsOfService: https://www.humanapi.co/developer-terms
+  contact:
+    email: help@humanapi.co
+    url: https://www.humanapi.co/contact
+servers:
+- url: https://auth.humanapi.co
+  description: Production server
+tags:
+- name: admin
+  description: API endpoints to authorize a client app for the Admin API
+paths:
+  /v1/admin/token:
+    post:
+      tags:
+      - admin
+      description: Admin API client type token
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/tokenPayload'
+      responses:
+        '200':
+          description: OK
+  /v1/connect/token:
+    post:
+      tags:
+      - connect
+      description: Public method for connect to generate tokens
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/connectTokenPayload'
+      responses:
+        '200':
+          description: OK
+components:
+  schemas:
+    tokenPayload:
+      type: object
+      required:
+      - client_id
+      - client_secret
+      - type
+      properties:
+        client_id:
+          type: string
+        client_secret:
+          type: string
+        type:
+          type: string
+    connectTokenPayload:
+      type: object
+      required:
+      - client_id
+      - client_user_id
+      - type
+      properties:
+        client_id:
+          type: string
+        client_user_id:
+          type: string
+        client_secret:
+          type: string
+        client_user_email:
+          type: string
+        type:
+          type: string
+        extra_scopes:
+          type: array
+          items:
+            type: string
+x-readme:
+  explorer-enabled: true
+  proxy-enabled: true

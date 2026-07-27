@@ -1,0 +1,28 @@
+generated: '2026-07-19'
+method: derived
+source: openapi/humanapi-admin-openapi.yml
+standards:
+- id: oauth2
+  conforms: false
+  evidence: auth is a bearer JWT obtained from token endpoints (client_id/client_secret) at auth.humanapi.co;
+    no OpenAPI oauth2 securityScheme declared
+- id: openid-connect
+  conforms: false
+- id: jwt
+  conforms: true
+  evidence: 'bearerAuth securityScheme bearerFormat: JWT'
+- id: rfc9457-problem-details
+  conforms: false
+  evidence: error responses use application/json with a custom envelope (statusCode/error/message/x-humanapi-request-id),
+    not application/problem+json
+- id: pagination-offset-limit
+  conforms: true
+  evidence: offset + limit query parameters on collection operations
+- id: fhir-r4
+  conforms: false
+  evidence: health data is exposed via custom user/report/provider schemas, not FHIR resources
+- id: json-api
+  conforms: false
+- id: idempotency
+  conforms: false
+  evidence: no Idempotency-Key header/parameter documented in the OpenAPI

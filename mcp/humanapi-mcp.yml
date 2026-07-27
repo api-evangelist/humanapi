@@ -1,0 +1,49 @@
+generated: '2026-07-19'
+method: derived
+status: candidate
+source: openapi/humanapi-admin-openapi.yml
+note: No official hosted/remote MCP server was found for Human API; tools are candidates derived one-per-operation
+  from the published Admin API OpenAPI.
+server:
+  name: humanapi
+  transport: stdio
+tools:
+- name: getOrderTypes
+  description: Get available order types for the client app
+  source_operation: openapi/humanapi-admin-openapi.yml#getOrderTypes
+- name: getUsersList
+  description: List all active users
+  source_operation: openapi/humanapi-admin-openapi.yml#getUsersList
+- name: createUser
+  description: Create a new user
+  source_operation: openapi/humanapi-admin-openapi.yml#createUser
+- name: performActionForUser
+  description: Perform an action for a given user
+  source_operation: openapi/humanapi-admin-openapi.yml#performActionForUser
+- name: getUserDetails
+  description: Get details of a specific user by humanId
+  source_operation: openapi/humanapi-admin-openapi.yml#getUserDetails
+- name: userProviders
+  description: Retrieve the list of health-data providers for a user
+  source_operation: openapi/humanapi-admin-openapi.yml#userProviders
+- name: getUsersSubscriptions
+  description: Find report subscriptions
+  source_operation: openapi/humanapi-admin-openapi.yml#getUsersSubscriptions
+- name: createSubscription
+  description: Create a new report subscription
+  source_operation: openapi/humanapi-admin-openapi.yml#createSubscription
+- name: getSubscriptionDetails
+  description: Get details of a subscription
+  source_operation: openapi/humanapi-admin-openapi.yml#getSubscriptionDetails
+- name: deleteSubscription
+  description: Delete a subscription
+  source_operation: openapi/humanapi-admin-openapi.yml#deleteSubscription
+- name: getUserReports
+  description: Fetch a user's available reports
+  source_operation: openapi/humanapi-admin-openapi.yml#getUserReports
+- name: getReportById
+  description: Fetch report content by id
+  source_operation: openapi/humanapi-admin-openapi.yml#getReportById
+- name: getTasksLiistLink
+  description: Fetch link to view an order's tasks
+  source_operation: openapi/humanapi-admin-openapi.yml#getTasksLiistLink

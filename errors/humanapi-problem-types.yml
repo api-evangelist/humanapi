@@ -1,0 +1,35 @@
+generated: '2026-07-19'
+method: derived
+source: openapi/humanapi-admin-openapi.yml
+format: custom
+media_type: application/json
+envelope:
+  fields:
+  - statusCode
+  - error
+  - message
+  - x-humanapi-request-id
+  validation_errors_add:
+  - validation.source
+  - validation.keys
+  note: 422/400 validation errors use the errorInvalidInput schema which adds a validation object listing
+    the offending payload keys
+problems:
+- status: 400
+  title: Cannot process input data (bad request)
+  schema: errorInvalidInput
+- status: 401
+  title: The token provided is invalid; it may have expired or been revoked
+  schema: error
+- status: 404
+  title: The specified resource was not found
+  schema: error
+- status: 409
+  title: There is a conflict with the specified resource (e.g. it may already exist)
+  schema: error
+- status: 422
+  title: There is a semantic error with the content of the request (invalid entity)
+  schema: errorInvalidInput
+- status: 500
+  title: There was an internal server error
+  schema: error

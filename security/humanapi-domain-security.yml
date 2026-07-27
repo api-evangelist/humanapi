@@ -1,0 +1,26 @@
+generated: '2026-07-19'
+method: probed
+source: live DNS/TLS/HTTP probes of apis.yml + OpenAPI hosts
+hosts:
+- host: admin.humanapi.co
+  https: true
+  tls_version: TLSv1.2
+  cert_expires: Nov  6 23:59:59 2026 GMT
+  hsts: null
+- host: auth.humanapi.co
+  https: true
+  tls_version: TLSv1.2
+  cert_expires: Nov  6 23:59:59 2026 GMT
+  hsts: null
+domains:
+- domain: humanapi.co
+  dnssec: false
+  caa:
+  - 0 issue "globalsign.com"
+  - 0 issue "letsencrypt.org"
+  - 0 issue "amazon.com"
+  - 0 issue "amazontrust.com"
+  - 0 issue "awstrust.com"
+  spf: true
+  dmarc: true
+  dmarc_policy: reject

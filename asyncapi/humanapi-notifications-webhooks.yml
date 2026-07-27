@@ -1,0 +1,29 @@
+generated: '2026-07-19'
+method: searched
+source: https://reference.humanapi.co/docs/order-summary-notification, https://reference.humanapi.co/docs/aps-status-notes
+spec_type: Webhooks
+envelope:
+  fields:
+  - timestamp
+  - eventId
+  - eventType
+  - eventGroup
+  - orderId
+  - humanId
+  - clientId
+  - userId
+  - clientUserId
+  - clientData
+  - eventPayload
+events:
+- type: orders.OrderSummaryUpdated
+  group: order
+  name: Order Summary Notification
+  description: Sent after an order reaches a terminal state (completed or cancelled); reports report availability,
+    order status and timeout.
+  docs: https://reference.humanapi.co/docs/order-summary-notification
+- type: integrations.VendorNoteCreated
+  group: offline
+  name: APS Status Notes Notification
+  description: Sent when a vendor status note is created against an offline (APS) order.
+  docs: https://reference.humanapi.co/docs/aps-status-notes

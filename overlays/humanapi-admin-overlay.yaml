@@ -1,0 +1,16 @@
+overlay: 1.0.0
+info:
+  title: API Evangelist enhancements for HumanAPI Admin API
+  version: 1.0.0
+extends: openapi/humanapi-admin-openapi.yml
+actions:
+- target: $.info
+  update:
+    x-apievangelist-enriched: true
+    x-apievangelist-provider: humanapi
+    x-apievangelist-generated: '2026-07-19'
+- target: $.info
+  update:
+    x-apievangelist-docs: https://reference.humanapi.co
+    x-apievangelist-portal: https://portal.humanapi.co
+    x-apievangelist-status: https://status.humanapi.co

@@ -1,0 +1,1143 @@
+openapi: 3.0.3
+info:
+  description: You can use Admin API to create and manage your Human API users
+  version: 1.0.0
+  title: Admin API
+  termsOfService: https://www.humanapi.co/developer-terms
+  contact:
+    email: help@humanapi.co
+    url: https://www.humanapi.co/contact
+servers:
+- url: https://admin.humanapi.co
+  description: Production server
+tags:
+- name: orders
+  description: API endpoints to get orders
+  externalDocs:
+    description: Find out more
+    url: https://reference.humanapi.co/docs/admin-api
+paths:
+  /api/v1/order-types:
+    get:
+      tags:
+      - orders
+      description: Get available order types for the logged in Client App
+      operationId: getOrderTypes
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    orderType:
+                      type: string
+                    orderTypeAlias:
+                      type: string
+                    orderTypeDescription:
+                      type: string
+                  example:
+                    orderType: full
+                    orderTypeAlias: Healthcheck Order
+                    orderTypeDescription: Full patient healthcheck order
+        '500':
+          $ref: '#/components/responses/serverError'
+  /api/v1/users:
+    get:
+      tags:
+      - users
+      description: Get the list of all active users
+      parameters:
+      - $ref: '#/components/parameters/offset'
+      - $ref: '#/components/parameters/humanIdQueryOptional'
+      - $ref: '#/components/parameters/clientUserIdQueryOptional'
+      operationId: getUsersList
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/user'
+        '401':
+          $ref: '#/components/responses/unauthorized'
+        '404':
+          $ref: '#/components/responses/notFound'
+    post:
+      tags:
+      - users
+      description: Create a new user
+      operationId: createUser
+      requestBody:
+        description: User details to add to the system
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/newUser'
+            examples:
+              createUserSendEmail:
+                summary: Create a user and send an invitation email
+                value:
+                  clientUserId: whateverIdValueYouWant
+                  clientUserEmail: jane.doe@humanapi.co
+                  firstName: Jane
+                  lastName: Doe
+                  dateOfBirth: '1968-02-13T00:00:00.000Z'
+                  autoInvite: true
+              createUserNoEmail:
+                summary: Create a user but do not send an invitation email
+                value:
+                  clientUserId: whateverIdValueYouWant
+                  clientUserEmail: jane.doe@humanapi.co
+                  firstName: Jane
+                  lastName: Doe
+                  dateOfBirth: '1968-02-13T00:00:00.000Z'
+                  autoInvite: false
+              createUserWithSuggestedSources:
+                summary: Create a user including suggested sources
+                value:
+                  clientUserId: whateverIdValueYouWant
+                  clientUserEmail: jane.doe@humanapi.co
+                  firstName: Jane
+                  lastName: Doe
+                  dateOfBirth: '1968-02-13T00:00:00.000Z'
+                  autoInvite: false
+                  suggestedSources:
+                  - Starfleet
+                  - Hospital Plus
+              createUserWithDemographics:
+                summary: Create a user with demographics
+                value:
+                  clientUserId: whateverIdValueYouWant
+                  clientUserEmail: jane.doe@humanapi.co
+                  firstName: Jane
+                  middleName: Austin
+                  lastName: Doe
+                  gender: female
+                  dateOfBirth: '1968-02-13T00:00:00.000Z'
+                  ssn: 123-45-6789
+                  phone: 411-133-2332
+                  orderType: healthcheck
+                  autoInvite: false
+                  address:
+                    street1: 969-1762 Buttery Rd.
+                    city: Boise
+                    state: VA
+                    zip: '54886'
+                  conditions:
+                  - COPD
+                  - Tobacco use
+                  providers:
+                  - name: Maxwell Forrest M.D.
+                    organizationName: Brentwood North Family Practice
+                    clientProviderId: client custom id
+                    npi: national provider identifier
+                    address:
+                      street1: 6818 Eget St.
+                      street2: 6818 Eget St.
+                      city: Tacoma
+                      state: AL
+                      zip: '92508'
+                    phone: 425-288-2332
+                    fax: 715-912-6931
+                    mrn: 000TB0009-3
+                  - name: Dr. Alban
+                    address:
+                      street1: 361-7936 Feugiat St.
+                      city: Las Vegas
+                      state: NV
+                      zip: '58521'
+                    mrn: 000AZ0002-9
+                    npi: '1234567890'
+                  attachments:
+                  - type: hipaaAuthorization
+                    contentType: application/pdf
+                    encoding: base64
+                    content: ''
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/user'
+        '202':
+          description: Accepted
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/user'
+        '400':
+          $ref: '#/components/responses/invalidEntity'
+        '401':
+          $ref: '#/components/responses/unauthorized'
+        '404':
+          $ref: '#/components/responses/notFound'
+        '409':
+          $ref: '#/components/responses/conflict'
+  /api/v1/users/actions:
+    post:
+      tags:
+      - users
+      description: Performs an action for a given user
+      operationId: performActionForUser
+      requestBody:
+        description: Performs an action for a given user
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/performActionForUser'
+            examples:
+              abortWithHumanId:
+                summary: Perform an action for a user by humanId
+                value:
+                  humanId: '123456789'
+                  action: abort
+              abortWithClientUserId:
+                summary: Perform an action for a user by clientUserId
+                value:
+                  clientUserId: some-client-user-id
+                  action: abort
+      responses:
+        '202':
+          description: Request accepted
+        '400':
+          $ref: '#/components/responses/badRequest'
+        '401':
+          $ref: '#/components/responses/unauthorized'
+        '404':
+          $ref: '#/components/responses/notFound'
+        '409':
+          description: 'Conflict -- the order is in a state where it can’t be aborted. (For example: Cancelled
+            or Completed)'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+              example:
+                code: 409
+                error: Conflict
+                message: The order is in a state where it can’t be aborted
+                x-humanapi-request-id: 05518ca2-1c9a-434e-8512-7284bbc54137
+  /api/v1/users/{humanId}:
+    get:
+      tags:
+      - users
+      description: Get the details of a specific user (by humanId)
+      operationId: getUserDetails
+      parameters:
+      - $ref: '#/components/parameters/humanIdPath'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/user'
+                - $ref: '#/components/schemas/t11mUser'
+              examples:
+                nonT11mUser:
+                  $ref: '#/components/examples/nonT11mUser'
+                t11mUser:
+                  $ref: '#/components/examples/t11mUser'
+                t11mUserWithDataAvailable:
+                  $ref: '#/components/examples/t11mUserWithDataAvailable'
+        '401':
+          $ref: '#/components/responses/unauthorized'
+        '404':
+          $ref: '#/components/responses/notFound'
+  /api/v1/users/providers:
+    get:
+      tags:
+      - users
+      description: Retrieve the list of providers for a given user
+      operationId: userProviders
+      parameters:
+      - $ref: '#/components/parameters/humanIdQueryOptional'
+      - $ref: '#/components/parameters/clientUserIdQueryOptional'
+      responses:
+        '200':
+          description: Accepted
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/providersResponse'
+        '400':
+          $ref: '#/components/responses/badRequest'
+        '401':
+          $ref: '#/components/responses/unauthorized'
+        '404':
+          $ref: '#/components/responses/notFound'
+  /api/v1/subscriptions:
+    get:
+      tags:
+      - subscriptions
+      description: Find a subscription
+      parameters:
+      - $ref: '#/components/parameters/clientUserId'
+      - $ref: '#/components/parameters/subscriberEmail'
+      - $ref: '#/components/parameters/role'
+      - $ref: '#/components/parameters/offset'
+      - $ref: '#/components/parameters/limit'
+      - $ref: '#/components/parameters/query'
+      - $ref: '#/components/parameters/sort'
+      operationId: getUsersSubscriptions
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/subscription'
+        '401':
+          $ref: '#/components/responses/unauthorized'
+        '404':
+          $ref: '#/components/responses/notFound'
+    post:
+      tags:
+      - subscriptions
+      description: Create a new subscription
+      operationId: createSubscription
+      requestBody:
+        description: Subscription details to add to the system
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/subscription'
+            examples:
+              createNewSubscription:
+                summary: Create a user and send an invitation email
+                value:
+                  clientUserId: whateverIdValueYouWant
+                  subscriberEmail: agent@acme.co
+                  subscriberFirstName: Jane
+                  subscriberLastName: Doe
+                  subscriberOffice: nw676
+                  role: producer
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/subscription'
+        '401':
+          $ref: '#/components/responses/unauthorized'
+        '404':
+          $ref: '#/components/responses/notFound'
+        '409':
+          $ref: '#/components/responses/conflict'
+  /api/v1/subscriptions/{subscriptionId}:
+    get:
+      tags:
+      - subscriptions
+      description: Get the details of a specific subscription (by subscription id)
+      operationId: getSubscriptionDetails
+      parameters:
+      - $ref: '#/components/parameters/subscriptionIdPath'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/subscription'
+        '401':
+          $ref: '#/components/responses/unauthorized'
+        '404':
+          $ref: '#/components/responses/notFound'
+    delete:
+      tags:
+      - subscriptions
+      description: Delete a specific subscription (by subscription id)
+      operationId: deleteSubscription
+      parameters:
+      - $ref: '#/components/parameters/subscriptionIdPath'
+      responses:
+        '200':
+          description: OK
+  /api/v1/user/reports:
+    get:
+      tags:
+      - reports
+      description: Fetch users available reports
+      operationId: getUserReports
+      parameters:
+      - $ref: '#/components/parameters/humanIdQueryOptional'
+      - $ref: '#/components/parameters/clientUserIdQueryOptional'
+      - name: createdByOrderId
+        in: query
+        description: Optional orderId filter
+        schema:
+          type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/userReports'
+              examples:
+                userReports:
+                  $ref: '#/components/examples/userReports'
+        '401':
+          $ref: '#/components/responses/unauthorized'
+        '404':
+          $ref: '#/components/responses/notFound'
+  /api/v1/user/reports/{reportId}:
+    get:
+      tags:
+      - reports
+      description: Fetch user report content
+      operationId: getReportById
+      parameters:
+      - name: reportId
+        in: path
+        description: The unique identifier of the report
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/pdf:
+              schema:
+                type: string
+                format: binary
+            application/json:
+              schema:
+                type: string
+                format: json
+            text/html:
+              schema:
+                type: string
+                format: html
+        '401':
+          $ref: '#/components/responses/unauthorized'
+        '404':
+          $ref: '#/components/responses/notFound'
+  /api/v1/resources/consumer-link:
+    post:
+      tags:
+      - resources
+      description: Fetch link to see order's tasks
+      operationId: getTasksLiistLink
+      requestBody:
+        description: User identifier
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/userHumanIdOrClientUserId'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/link'
+              examples:
+                linkCreation:
+                  summary: Link creation
+                  value:
+                    clientId: aaa0020000000000000111111000d00000000002
+                    consumerLink: https://todo.staging.humanapi.co/
+        '401':
+          $ref: '#/components/responses/unauthorized'
+        '404':
+          $ref: '#/components/responses/notFound'
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+  schemas:
+    error:
+      type: object
+      required:
+      - statusCode
+      - error
+      - message
+      - x-humanapi-request-id
+      properties:
+        code:
+          type: integer
+          format: int32
+        error:
+          type: string
+        message:
+          type: string
+        x-humanapi-request-id:
+          type: string
+    user:
+      type: object
+      additionalProperties: false
+      required:
+      - humanId
+      - clientUserEmail
+      - createdAt
+      - updatedAt
+      - status
+      properties:
+        firstName:
+          type: string
+        lastName:
+          type: string
+        dateOfBirth:
+          type: string
+          format: date-time
+          example: '1968-02-13T00:00:00.000Z'
+        humanId:
+          type: string
+        clientUserEmail:
+          type: string
+        createdAt:
+          type: string
+          format: date-time
+        updatedAt:
+          type: string
+          format: date-time
+        status:
+          type: string
+        suggestedSources:
+          type: array
+          items:
+            type: string
+        inviteLink:
+          type: string
+    newUser:
+      type: object
+      additionalProperties: false
+      required:
+      - clientUserId
+      properties:
+        clientUserId:
+          type: string
+        clientUserEmail:
+          type: string
+        firstName:
+          type: string
+        middleName:
+          type: string
+        lastName:
+          type: string
+        gender:
+          type: string
+          enum:
+          - male
+          - female
+          - other
+        dateOfBirth:
+          type: string
+          description: 'A string with one of the following formats:
+
+            - YYYY-MM-DD Example: 1990-12-30
+
+            - M/D/YY Example: 3/23/89
+
+            - M/D/YYYY Example: 2/12/2004
+
+            - YYYY-MM-DDTHH:mmZ as ECMA-262 Example: 1990-12-30T00:00Z the timezone is optional
+
+            - YYYY-MM-DDTHH:mm:ssZ as ECMA-262 Example: 1990-12-30T00:00:00Z the timezone is optional
+
+            - YYYY-MM-DDTHH:mm:ss.sssZ as ECMA-262 Example: 1990-12-30T00:00:00.000Z the timezone is optional
+
+            '
+        ssn:
+          type: string
+          pattern: ^(((?!(666|000))\d{3}(?!0{2})\d{2}(?!0{4})\d{4})|((?!(666|000))\d{3}-(?!0{2})\d{2}-(?!0{4})\d{4}))$
+        phone:
+          type: string
+          pattern: ^(([()\- .]{0,2}\d){10})[()\- .]{0,2}$
+        autoInvite:
+          type: boolean
+        orderType:
+          type: string
+        clientData:
+          type: object
+          additionalProperties:
+            anyOf:
+            - type: string
+            - type: number
+            - type: boolean
+        suggestedSources:
+          type: array
+          items:
+            type: string
+        conditions:
+          type: array
+          description: Include order-specific conditions or additional instructions for APS retrieval
+            orders
+          items:
+            type: string
+        address:
+          $ref: '#/components/schemas/address'
+        providers:
+          type: array
+          items:
+            $ref: '#/components/schemas/provider'
+        attachments:
+          type: array
+          items:
+            $ref: '#/components/schemas/attachment'
+    provider:
+      type: object
+      additionalProperties: false
+      required:
+      - name
+      - address
+      properties:
+        name:
+          type: string
+        organizationName:
+          type: string
+        clientProviderId:
+          type: string
+        address:
+          $ref: '#/components/schemas/address'
+        phone:
+          type: string
+          pattern: ^(([()\- .]{0,2}\d){10})[()\- .]{0,2}$
+        fax:
+          type: string
+          pattern: ^(([()\- .]{0,2}\d){10})[()\- .]{0,2}$
+        mrn:
+          type: string
+        npi:
+          oneOf:
+          - type: string
+            minLength: 0
+          - type: number
+          description: This field can be a string, number, or an empty string.
+    attachment:
+      type: object
+      additionalProperties: false
+      required:
+      - type
+      - contentType
+      - encoding
+      - content
+      properties:
+        type:
+          type: string
+        contentType:
+          type: string
+        encoding:
+          type: string
+        content:
+          type: string
+    address:
+      type: object
+      additionalProperties: false
+      required:
+      - street1
+      - city
+      - state
+      - zip
+      properties:
+        street1:
+          type: string
+        street2:
+          type: string
+        city:
+          type: string
+        state:
+          type: string
+        zip:
+          type: integer
+    errorInvalidInput:
+      type: object
+      required:
+      - statusCode
+      - error
+      - message
+      - validation
+      - x-humanapi-request-id
+      properties:
+        statusCode:
+          type: integer
+          format: int32
+        error:
+          type: string
+        message:
+          type: string
+        validation:
+          type: object
+          required:
+          - source
+          - keys
+          properties:
+            source:
+              type: string
+              enum:
+              - payload
+            keys:
+              type: array
+              items:
+                type: string
+        x-humanapi-request-id:
+          type: string
+    actionForUsersActionAttribute:
+      type: string
+      enum:
+      - resync
+      - abort
+    actionForUserHumanId:
+      title: Action for user by humanId
+      type: object
+      required:
+      - action
+      - humanId
+      properties:
+        humanId:
+          type: string
+        action:
+          $ref: '#/components/schemas/actionForUsersActionAttribute'
+    actionForUserClientUserId:
+      title: Action for user by clientUserId
+      type: object
+      required:
+      - action
+      - clientUserId
+      properties:
+        clientUserId:
+          type: string
+        action:
+          $ref: '#/components/schemas/actionForUsersActionAttribute'
+    performActionForUser:
+      oneOf:
+      - $ref: '#/components/schemas/actionForUserHumanId'
+      - $ref: '#/components/schemas/actionForUserClientUserId'
+    t11mUser:
+      type: object
+      additionalProperties: false
+      properties:
+        firstName:
+          type: string
+        lastName:
+          type: string
+        dateOfBirth:
+          type: string
+          format: date-time
+          example: '1968-02-13T00:00:00.000Z'
+        humanId:
+          type: string
+        clientUserId:
+          type: string
+        clientUserEmail:
+          type: string
+        createdAt:
+          type: string
+          format: date-time
+        updatedAt:
+          type: string
+          format: date-time
+        suggestedSources:
+          type: array
+          items:
+            type: string
+        orders:
+          type: array
+          items:
+            anyOf:
+            - $ref: '#/components/schemas/orderInfo'
+            - $ref: '#/components/schemas/orderInfoWithDataAvailable'
+    orderInfo:
+      type: object
+      properties:
+        orderId:
+          type: string
+        orderType:
+          type: string
+        orderTypeAlias:
+          type: string
+        orderStatus:
+          type: string
+        reportsAvailable:
+          type: boolean
+    orderInfoWithDataAvailable:
+      type: object
+      properties:
+        orderId:
+          type: string
+        orderType:
+          type: string
+        orderTypeAlias:
+          type: string
+        orderStatus:
+          type: string
+        reportsAvailable:
+          type: boolean
+        dataAvailable:
+          type: boolean
+    providersResponse:
+      type: array
+      items:
+        type: object
+        properties:
+          id:
+            type: string
+          name:
+            type: string
+    subscription:
+      type: object
+      required:
+      - clientUserId
+      - subscriberEmail
+      - role
+      properties:
+        clientUserId:
+          type: string
+        subscriberEmail:
+          type: string
+        role:
+          type: string
+        subscriberOffice:
+          type: string
+        subscriberFirstName:
+          type: string
+        subscriberLastName:
+          type: string
+    userReports:
+      type: object
+      additionalProperties: false
+      oneOf:
+      - $ref: '#/components/schemas/individualReportGroup'
+      - $ref: '#/components/schemas/combinedReportGroup'
+    individualReportGroup:
+      type: object
+      properties:
+        name:
+          type: string
+        reports:
+          type: array
+          items:
+            $ref: '#/components/schemas/individualReportInfo'
+    combinedReportGroup:
+      type: object
+      properties:
+        name:
+          type: string
+          enum:
+          - combined
+        baseReportNames:
+          type: array
+          items:
+            type: string
+        reports:
+          type: array
+          items:
+            $ref: '#/components/schemas/combinedReportInfo'
+    individualReportInfo:
+      type: object
+      properties:
+        fileExtension:
+          type: string
+        id:
+          type: string
+        uri:
+          type: string
+        createdAt:
+          format: date-time
+          type: string
+        createdByOrderId:
+          type: string
+          nullable: true
+        orderIds:
+          type: array
+          items:
+            type: string
+        providerIds:
+          type: array
+          items:
+            type: string
+        clientProviderIds:
+          type: array
+          items:
+            type: string
+    combinedReportInfo:
+      type: object
+      properties:
+        fileExtension:
+          type: string
+        id:
+          type: string
+        uri:
+          type: string
+        createdAt:
+          format: date-time
+          type: string
+        createdByOrderId:
+          type: string
+          nullable: true
+        orderIds:
+          type: array
+          items:
+            type: string
+        providerIds:
+          type: array
+          items:
+            type: string
+        clientProviderIds:
+          type: array
+          items:
+            type: string
+        groupBy:
+          type: string
+          enum:
+          - user_id
+    link:
+      type: object
+      properties:
+        consumerLink:
+          type: string
+        clientId:
+          type: string
+    userHumanIdOrClientUserId:
+      type: object
+      properties:
+        clientUserId:
+          type: string
+        humanId:
+          type: string
+  responses:
+    serverError:
+      description: There was an internal server error
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/error'
+          example:
+            code: 500
+            error: Internal Server Error
+            message: Internal Server Error
+            x-humanapi-request-id: 05518ca2-1c9a-434e-8512-7284bbc54137
+    unauthorized:
+      description: The token provided is invalid. It may have expired or may have been revoked.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/error'
+          example:
+            code: 401
+            error: Unauthorized
+            message: Cannot authenticate you with this token
+            x-humanapi-request-id: 05518ca2-1c9a-434e-8512-7284bbc54137
+    notFound:
+      description: The specified resource was not found (e.g. the id does not exist)
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/error'
+          example:
+            code: 404
+            error: Not Found
+            message: Not Found
+            x-humanapi-request-id: 05518ca2-1c9a-434e-8512-7284bbc54137
+    conflict:
+      description: There is a conflict with the specified resource (e.g. it may already exist)
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/error'
+          example:
+            code: 409
+            error: Conflict
+            message: Unable to match the login of the new user to an existing user found for that user
+            x-humanapi-request-id: 05518ca2-1c9a-434e-8512-7284bbc54137
+    invalidEntity:
+      description: There is a semantic error with the content of the request
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/errorInvalidInput'
+          example:
+            statusCode: 400
+            error: Bad Request
+            message: '"dateOfBirth" must be a valid date'
+            validation:
+              source: payload
+              keys:
+              - dateOfBirth
+            x-humanapi-request-id: fd05b02c-f527-4178-a907-42c2c3ac28c1
+    badRequest:
+      description: Cannot process input data
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/error'
+          example:
+            code: 400
+            error: Bad Request
+            message: Bad Request
+            x-humanapi-request-id: 05518ca2-1c9a-434e-8512-7284bbc54137
+  parameters:
+    humanIdQueryOptional:
+      name: humanId
+      in: query
+      description: The humanId of the user
+      required: false
+      schema:
+        type: string
+    offset:
+      name: offset
+      in: query
+      description: The index of the first record to return
+      required: false
+      schema:
+        type: integer
+        format: int32
+        default: 0
+    clientUserIdQueryOptional:
+      name: clientUserId
+      in: query
+      description: The clientUserId that the subscription is listening to
+      required: false
+      schema:
+        type: string
+    humanIdPath:
+      name: humanId
+      in: path
+      description: The humanId of the user
+      required: true
+      schema:
+        type: string
+    limit:
+      name: limit
+      in: query
+      description: The max number of records to return in one query
+      required: false
+      schema:
+        type: integer
+        format: int32
+        default: 50
+    subscriberEmail:
+      name: subscriberEmail
+      in: query
+      description: The email that the subscription is bound to
+      required: true
+      schema:
+        type: string
+    role:
+      name: role
+      in: query
+      description: The role that the subscription is bound to.
+      required: true
+      schema:
+        type: string
+        enum:
+        - producer
+    clientUserId:
+      name: clientUserId
+      in: query
+      description: The clientUserId of user.
+      required: true
+      schema:
+        type: string
+    query:
+      name: query
+      in: query
+      description: The search string for pagination
+      required: false
+      schema:
+        type: string
+    sort:
+      name: sort
+      in: query
+      description: The sort option for pagination
+      required: false
+      schema:
+        type: string
+    subscriptionIdPath:
+      name: subscriptionId
+      in: path
+      description: The subscriptionId of the user
+      required: true
+      schema:
+        type: string
+  examples:
+    nonT11mUser:
+      value:
+        firstName: Jane
+        lastName: Smith
+        dateOfBirth: '1968-02-13T00:00:00.000Z'
+        humanId: f0e4cfc59516be96512c3d98e48b5abf
+        clientUserEmail: jane@smith.com
+        clientUserId: jane_smith_humanapi_connect
+        createdAt: '2025-02-06T12:00:00.000Z'
+        updatedAt: '2025-02-06T12:00:00.000Z'
+        status: Invited
+        suggestedSources:
+        - Starfleet Medical
+    t11mUser:
+      value:
+        firstName: Jane
+        lastName: Smith
+        dateOfBirth: '1968-02-13T00:00:00.000Z'
+        humanId: c1dc2ca616164a37b9ae5bf9f3c8884d
+        clientUserEmail: jane@smith.com
+        clientUserId: jane_smith_health_intelligence
+        createdAt: '2025-02-06T12:00:00.000Z'
+        updatedAt: '2025-02-06T12:00:00.000Z'
+        suggestedSources:
+        - Starfleet Medical
+        orders:
+        - orderId: 2e9d2eaf-39c9-4182-a6fc-b076f99c75d9
+          orderType: default
+          orderStatus: Pended
+          reportsAvailable: false
+    t11mUserWithDataAvailable:
+      value:
+        firstName: Jane
+        lastName: Smith
+        dateOfBirth: '1968-02-13T00:00:00.000Z'
+        humanId: 4f1bc984b859d5adc6dc3aebba899671
+        clientUserEmail: jane@smith.com
+        clientUserId: jane_smith_health_intelligence_2
+        createdAt: '2025-02-06T12:00:00.000Z'
+        updatedAt: '2025-02-06T12:00:00.000Z'
+        suggestedSources:
+        - Starfleet Medical
+        orders:
+        - orderId: 08780acf-9f05-4391-8bb5-6d775efdc430
+          orderType: default
+          orderStatus: Completed
+          reportsAvailable: true
+          dataAvailable: true
+    userReports:
+      value:
+      - name: apidata
+        reports:
+        - fileExtension: json
+          id: '0001'
+          uri: <some-uri>
+          createdAt: '2022-08-11T17:23:22.095Z'
+      - name: highlights
+        reports:
+        - fileExtension: pdf
+          id: '0002'
+          uri: <some-uri>
+          createdAt: '2022-08-11T17:23:22.095Z'
+security:
+- bearerAuth: []
+x-readme:
+  explorer-enabled: true
+  proxy-enabled: true

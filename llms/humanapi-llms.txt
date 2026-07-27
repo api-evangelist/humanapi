@@ -1,0 +1,42 @@
+# Human API Documentation
+
+> Get health data from everywhere  Real-time access to digital, structured health and medical data from providers, labs, pharmacies, devices and apps
+
+## Guides
+- [Health Intelligence Platform](https://reference.humanapi.co/docs/overview.md)
+- [Configuring "Order Types"](https://reference.humanapi.co/docs/configuring-order-types.md)
+- [Integration Best Practices](https://reference.humanapi.co/docs/integration-best-practices.md): steven.santamaria+dev_portal@humanapi.co
+- [Submitting Orders](https://reference.humanapi.co/docs/submitting-orders.md)
+- [Order Guidelines](https://reference.humanapi.co/docs/order-guidelines.md)
+- [Order Fulfillment Lifecycle](https://reference.humanapi.co/docs/order-fulfillment-lifecycle.md)
+- [Order Summary Notification](https://reference.humanapi.co/docs/order-summary-notification.md)
+- [APS Status Notes Notification](https://reference.humanapi.co/docs/aps-status-notes.md)
+- [Report Types](https://reference.humanapi.co/docs/reports.md)
+- [Reports Delivery](https://reference.humanapi.co/docs/reports-delivery.md)
+- [Shipment to Pre-signed URLs](https://reference.humanapi.co/docs/shipment-to-pre-signed-urls.md)
+
+## API Reference
+- [/api/v1/order-types](https://reference.humanapi.co/reference/getordertypes.md): Get available order types for the logged in Client App
+- [/api/v1/users](https://reference.humanapi.co/reference/getuserslist.md): Get the list of all active users
+- [/api/v1/users](https://reference.humanapi.co/reference/createuser.md): Create a new user
+- [/api/v1/users/actions](https://reference.humanapi.co/reference/performactionforuser.md): Performs an action for a given user
+- [/api/v1/users/{humanId}](https://reference.humanapi.co/reference/getuserdetails.md): Get the details of a specific user (by humanId)
+- [/api/v1/users/providers](https://reference.humanapi.co/reference/userproviders.md): Retrieve the list of providers for a given user
+- [subscriptions](https://reference.humanapi.co/reference/subscriptions.md): Create and manage subscriptions.
+- [/api/v1/subscriptions](https://reference.humanapi.co/reference/getuserssubscriptions.md): Find a subscription
+- [/api/v1/subscriptions](https://reference.humanapi.co/reference/createsubscription.md): Create a new subscription
+- [/api/v1/subscriptions/{subscriptionId}](https://reference.humanapi.co/reference/getsubscriptiondetails.md): Get the details of a specific subscription (by subscription id)
+- [/api/v1/subscriptions/{subscriptionId}](https://reference.humanapi.co/reference/deletesubscription.md): Delete a specific subscription (by subscription id)
+- [/api/v1/user/reports](https://reference.humanapi.co/reference/getuserreports.md): Fetch users available reports
+- [/api/v1/user/reports/{reportId}](https://reference.humanapi.co/reference/getreportbyid-1.md): Fetch user report content
+- [resources](https://reference.humanapi.co/reference/resources.md): Manage additional order resources.
+- [/api/v1/resources/consumer-link](https://reference.humanapi.co/reference/gettasksliistlink.md): Fetch link to see order's tasks
+- [/v1/admin/token](https://reference.humanapi.co/reference/post_v1-admin-token.md): Admin API client type token
+- [/v1/connect/token](https://reference.humanapi.co/reference/post_v1-connect-token.md): Public method for connect to generate tokens
+
+## Pages
+- [Apple Health & Apple Watch](https://reference.humanapi.co/apple-health-data.md)
+- [Changelog](https://reference.humanapi.co/changelog.md)
+- [Data Network](https://reference.humanapi.co/data-network.md)
+- [Epic Community Member Documentation](https://reference.humanapi.co/epic-documentation.md)
+- [Wellness Sources](https://reference.humanapi.co/wellness-sources.md)

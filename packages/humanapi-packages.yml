@@ -1,0 +1,58 @@
+generated: '2026-07-19'
+method: searched
+source: https://github.com/humanapi
+packages:
+- language: python
+  registry: pypi
+  name: humanapi
+  url: https://pypi.org/project/humanapi/
+  install: pip install humanapi
+  repo: https://github.com/humanapi/humanapi-python-client
+  official: true
+  note: CLI client and Python API library for the HumanAPI health data platform
+- language: ruby
+  registry: rubygems
+  name: humanapi
+  url: https://rubygems.org/gems/humanapi
+  install: gem install humanapi
+  repo: https://github.com/humanapi/humanapi
+  official: true
+- language: javascript
+  registry: npm
+  name: passport-humanapi
+  url: https://www.npmjs.com/package/passport-humanapi
+  install: npm install passport-humanapi
+  repo: https://github.com/humanapi/passport-humanapi
+  official: true
+  note: HumanAPI authentication strategy for Passport (Express.js)
+- language: javascript
+  registry: github
+  name: connect-client
+  url: https://github.com/humanapi/connect-client
+  install: git clone https://github.com/humanapi/connect-client
+  repo: https://github.com/humanapi/connect-client
+  official: true
+  note: Spawn Human Connect within your application
+- language: objective-c
+  registry: github
+  name: humanapi-ios-client
+  url: https://github.com/humanapi/humanapi-ios-client
+  install: git clone https://github.com/humanapi/humanapi-ios-client
+  repo: https://github.com/humanapi/humanapi-ios-client
+  official: true
+  note: HumanAPI iOS client
+- language: java
+  registry: github
+  name: humanapi-android-client
+  url: https://github.com/humanapi/humanapi-android-client
+  install: git clone https://github.com/humanapi/humanapi-android-client
+  repo: https://github.com/humanapi/humanapi-android-client
+  official: true
+  note: HumanAPI Android client
+- language: java
+  registry: github
+  name: humanapi-java-client
+  url: https://github.com/humanapi/humanapi-java-client
+  install: git clone https://github.com/humanapi/humanapi-java-client
+  repo: https://github.com/humanapi/humanapi-java-client
+  official: true

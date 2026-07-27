@@ -1,0 +1,13 @@
+generated: '2026-07-19'
+method: searched
+versioning:
+  scheme: uri-path
+  current: v1
+  docs: https://reference.humanapi.co/docs/overview
+status_page: https://status.humanapi.co
+terms_of_service: https://www.humanapi.co/developer-terms
+deprecation:
+  policy_url: null
+  sunset_header: false
+  note: No published deprecation/sunset policy found
+deprecated_operations: []

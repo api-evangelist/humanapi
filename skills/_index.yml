@@ -1,0 +1,16 @@
+generated: '2026-07-19'
+method: generated
+source: openapi/humanapi-admin-openapi.yml
+skills:
+- file: humanapi-submit-order-and-fetch-reports.md
+  name: Submit a health-data order and fetch the resulting reports
+  api: openapi/humanapi-admin-openapi.yml
+  operations: [getOrderTypes, createUser, performActionForUser, getUserReports, getReportById]
+- file: humanapi-create-user-and-connect-providers.md
+  name: Create a user and connect their health-data providers
+  api: openapi/humanapi-admin-openapi.yml
+  operations: [createUser, getUserDetails, userProviders, performActionForUser]
+- file: humanapi-manage-report-subscriptions.md
+  name: Manage report subscriptions for a user
+  api: openapi/humanapi-admin-openapi.yml
+  operations: [createSubscription, getUsersSubscriptions, getSubscriptionDetails, deleteSubscription]
