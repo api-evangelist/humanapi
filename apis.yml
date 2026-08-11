@@ -118,6 +118,8 @@ maintainers:
 - FN: APIs.json
   email: info@apis.io
 common:
+- type: Overlay
+  url: overlays/humanapi-admin-overlay.yaml
 - type: DeveloperPortal
   url: https://portal.humanapi.co
 - type: Documentation
