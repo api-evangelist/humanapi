@@ -1,0 +1,39 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "admin connect API",
+    "version": "1.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "connect",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "POST /v1/connect/token",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://admin.humanapi.co/v1/connect/token",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Public method for connect to generate tokens"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

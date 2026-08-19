@@ -1,0 +1,35 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "admin orders API",
+    "version": "1.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "orders",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "getOrderTypes",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://admin.humanapi.co/api/v1/order-types"
+          },
+          "docs": "Get available order types for the logged in Client App"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

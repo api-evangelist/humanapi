@@ -1,0 +1,132 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "admin subscriptions API",
+    "version": "1.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "subscriptions",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "getUsersSubscriptions",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://admin.humanapi.co/api/v1/subscriptions",
+            "params": [
+              {
+                "name": "clientUserId",
+                "value": "",
+                "type": "query",
+                "description": "The clientUserId of user."
+              },
+              {
+                "name": "subscriberEmail",
+                "value": "",
+                "type": "query",
+                "description": "The email that the subscription is bound to"
+              },
+              {
+                "name": "role",
+                "value": "",
+                "type": "query",
+                "description": "The role that the subscription is bound to."
+              },
+              {
+                "name": "offset",
+                "value": "",
+                "type": "query",
+                "description": "The index of the first record to return"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "The max number of records to return in one query"
+              },
+              {
+                "name": "query",
+                "value": "",
+                "type": "query",
+                "description": "The search string for pagination"
+              },
+              {
+                "name": "sort",
+                "value": "",
+                "type": "query",
+                "description": "The sort option for pagination"
+              }
+            ]
+          },
+          "docs": "Find a subscription"
+        },
+        {
+          "info": {
+            "name": "createSubscription",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://admin.humanapi.co/api/v1/subscriptions",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a new subscription"
+        },
+        {
+          "info": {
+            "name": "getSubscriptionDetails",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://admin.humanapi.co/api/v1/subscriptions/:subscriptionId",
+            "params": [
+              {
+                "name": "subscriptionId",
+                "value": "",
+                "type": "path",
+                "description": "The subscriptionId of the user"
+              }
+            ]
+          },
+          "docs": "Get the details of a specific subscription (by subscription id)"
+        },
+        {
+          "info": {
+            "name": "deleteSubscription",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://admin.humanapi.co/api/v1/subscriptions/:subscriptionId",
+            "params": [
+              {
+                "name": "subscriptionId",
+                "value": "",
+                "type": "path",
+                "description": "The subscriptionId of the user"
+              }
+            ]
+          },
+          "docs": "Delete a specific subscription (by subscription id)"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

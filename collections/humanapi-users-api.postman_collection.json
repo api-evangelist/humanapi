@@ -1,0 +1,1435 @@
+{
+  "item": [
+    {
+      "id": "c0bf90d6-f24a-40a6-9800-b3e4b6336d3c",
+      "name": "users",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "aa75ee52-465e-46b9-b6d1-8a33993ade03",
+          "name": "get Users List",
+          "request": {
+            "name": "get Users List",
+            "description": {
+              "content": "Get the list of all active users",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "v1",
+                "users"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "offset",
+                  "value": "0",
+                  "description": "The index of the first record to return"
+                },
+                {
+                  "disabled": false,
+                  "key": "humanId",
+                  "value": "<string>",
+                  "description": "The humanId of the user"
+                },
+                {
+                  "disabled": false,
+                  "key": "clientUserId",
+                  "value": "<string>",
+                  "description": "The clientUserId that the subscription is listening to"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "d41e5faf-014b-43ea-8dc1-7e784c95ad4d",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "users"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "offset",
+                      "value": "0"
+                    },
+                    {
+                      "key": "humanId",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "clientUserId",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"humanId\": \"string\",\n    \"clientUserEmail\": \"string\",\n    \"createdAt\": \"1991-09-25T10:56:41.377Z\",\n    \"updatedAt\": \"1988-09-05T15:57:12.002Z\",\n    \"status\": \"string\",\n    \"firstName\": \"string\",\n    \"lastName\": \"string\",\n    \"dateOfBirth\": \"1968-02-13T00:00:00.000Z\",\n    \"suggestedSources\": [\n      \"string\",\n      \"string\"\n    ],\n    \"inviteLink\": \"string\"\n  },\n  {\n    \"humanId\": \"string\",\n    \"clientUserEmail\": \"string\",\n    \"createdAt\": \"1962-09-03T13:56:39.459Z\",\n    \"updatedAt\": \"2000-10-27T23:54:24.063Z\",\n    \"status\": \"string\",\n    \"firstName\": \"string\",\n    \"lastName\": \"string\",\n    \"dateOfBirth\": \"1968-02-13T00:00:00.000Z\",\n    \"suggestedSources\": [\n      \"string\",\n      \"string\"\n    ],\n    \"inviteLink\": \"string\"\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "7c857808-29c9-4ed8-a40b-a280ea737c83",
+              "name": "The token provided is invalid. It may have expired or may have been revoked.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "users"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "offset",
+                      "value": "0"
+                    },
+                    {
+                      "key": "humanId",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "clientUserId",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 401,\n  \"error\": \"Unauthorized\",\n  \"message\": \"Cannot authenticate you with this token\",\n  \"x-humanapi-request-id\": \"05518ca2-1c9a-434e-8512-7284bbc54137\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "c7866149-6910-446b-b9bc-69e939bd36e5",
+              "name": "The specified resource was not found (e.g. the id does not exist)",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "users"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "offset",
+                      "value": "0"
+                    },
+                    {
+                      "key": "humanId",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "clientUserId",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 404,\n  \"error\": \"Not Found\",\n  \"message\": \"Not Found\",\n  \"x-humanapi-request-id\": \"05518ca2-1c9a-434e-8512-7284bbc54137\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "e33e3946-d707-48d4-bf54-efe2e6572e9d",
+          "name": "create User",
+          "request": {
+            "name": "create User",
+            "description": {
+              "content": "Create a new user",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "v1",
+                "users"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"clientUserId\": \"<string>\",\n  \"clientUserEmail\": \"<string>\",\n  \"firstName\": \"<string>\",\n  \"middleName\": \"<string>\",\n  \"lastName\": \"<string>\",\n  \"gender\": \"<string>\",\n  \"dateOfBirth\": \"<string>\",\n  \"ssn\": \"<string>\",\n  \"phone\": \"<string>\",\n  \"autoInvite\": \"<boolean>\",\n  \"orderType\": \"<string>\",\n  \"clientData\": {\n    \"key_0\": \"<string>\",\n    \"key_1\": \"<string>\"\n  },\n  \"suggestedSources\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"conditions\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"address\": {\n    \"street1\": \"<string>\",\n    \"city\": \"<string>\",\n    \"state\": \"<string>\",\n    \"zip\": \"<integer>\",\n    \"street2\": \"<string>\"\n  },\n  \"providers\": [\n    {\n      \"name\": \"<string>\",\n      \"address\": {\n        \"street1\": \"<string>\",\n        \"city\": \"<string>\",\n        \"state\": \"<string>\",\n        \"zip\": \"<integer>\",\n        \"street2\": \"<string>\"\n      },\n      \"organizationName\": \"<string>\",\n      \"clientProviderId\": \"<string>\",\n      \"phone\": \"<string>\",\n      \"fax\": \"<string>\",\n      \"mrn\": \"<string>\",\n      \"npi\": \"<string>\"\n    },\n    {\n      \"name\": \"<string>\",\n      \"address\": {\n        \"street1\": \"<string>\",\n        \"city\": \"<string>\",\n        \"state\": \"<string>\",\n        \"zip\": \"<integer>\",\n        \"street2\": \"<string>\"\n      },\n      \"organizationName\": \"<string>\",\n      \"clientProviderId\": \"<string>\",\n      \"phone\": \"<string>\",\n      \"fax\": \"<string>\",\n      \"mrn\": \"<string>\",\n      \"npi\": \"<string>\"\n    }\n  ],\n  \"attachments\": [\n    {\n      \"type\": \"<string>\",\n      \"contentType\": \"<string>\",\n      \"encoding\": \"<string>\",\n      \"content\": \"<string>\"\n    },\n    {\n      \"type\": \"<string>\",\n      \"contentType\": \"<string>\",\n      \"encoding\": \"<string>\",\n      \"content\": \"<string>\"\n    }\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "7f0e877f-d19d-4382-a247-27defcb28a40",
+              "name": "Created",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "users"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"clientUserId\": \"whateverIdValueYouWant\",\n  \"clientUserEmail\": \"jane.doe@humanapi.co\",\n  \"firstName\": \"Jane\",\n  \"lastName\": \"Doe\",\n  \"dateOfBirth\": \"1968-02-13T00:00:00.000Z\",\n  \"autoInvite\": true\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"humanId\": \"string\",\n    \"clientUserEmail\": \"string\",\n    \"createdAt\": \"1988-01-18T08:13:56.114Z\",\n    \"updatedAt\": \"1968-08-05T00:06:02.077Z\",\n    \"status\": \"string\",\n    \"firstName\": \"string\",\n    \"lastName\": \"string\",\n    \"dateOfBirth\": \"1968-02-13T00:00:00.000Z\",\n    \"suggestedSources\": [\n      \"string\",\n      \"string\"\n    ],\n    \"inviteLink\": \"string\"\n  },\n  {\n    \"humanId\": \"string\",\n    \"clientUserEmail\": \"string\",\n    \"createdAt\": \"2006-01-28T17:58:10.428Z\",\n    \"updatedAt\": \"1949-05-14T22:41:42.562Z\",\n    \"status\": \"string\",\n    \"firstName\": \"string\",\n    \"lastName\": \"string\",\n    \"dateOfBirth\": \"1968-02-13T00:00:00.000Z\",\n    \"suggestedSources\": [\n      \"string\",\n      \"string\"\n    ],\n    \"inviteLink\": \"string\"\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "72b1b83f-3adf-496e-a68a-575429a38395",
+              "name": "Accepted",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "users"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"clientUserId\": \"whateverIdValueYouWant\",\n  \"clientUserEmail\": \"jane.doe@humanapi.co\",\n  \"firstName\": \"Jane\",\n  \"lastName\": \"Doe\",\n  \"dateOfBirth\": \"1968-02-13T00:00:00.000Z\",\n  \"autoInvite\": true\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Accepted",
+              "code": 202,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"humanId\": \"string\",\n    \"clientUserEmail\": \"string\",\n    \"createdAt\": \"1988-01-18T08:13:56.114Z\",\n    \"updatedAt\": \"1968-08-05T00:06:02.077Z\",\n    \"status\": \"string\",\n    \"firstName\": \"string\",\n    \"lastName\": \"string\",\n    \"dateOfBirth\": \"1968-02-13T00:00:00.000Z\",\n    \"suggestedSources\": [\n      \"string\",\n      \"string\"\n    ],\n    \"inviteLink\": \"string\"\n  },\n  {\n    \"humanId\": \"string\",\n    \"clientUserEmail\": \"string\",\n    \"createdAt\": \"2006-01-28T17:58:10.428Z\",\n    \"updatedAt\": \"1949-05-14T22:41:42.562Z\",\n    \"status\": \"string\",\n    \"firstName\": \"string\",\n    \"lastName\": \"string\",\n    \"dateOfBirth\": \"1968-02-13T00:00:00.000Z\",\n    \"suggestedSources\": [\n      \"string\",\n      \"string\"\n    ],\n    \"inviteLink\": \"string\"\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "6c9b51d1-fe83-46cf-b9e2-1084fee06b17",
+              "name": "There is a semantic error with the content of the request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "users"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"clientUserId\": \"whateverIdValueYouWant\",\n  \"clientUserEmail\": \"jane.doe@humanapi.co\",\n  \"firstName\": \"Jane\",\n  \"lastName\": \"Doe\",\n  \"dateOfBirth\": \"1968-02-13T00:00:00.000Z\",\n  \"autoInvite\": true\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"statusCode\": 400,\n  \"error\": \"Bad Request\",\n  \"message\": \"\\\"dateOfBirth\\\" must be a valid date\",\n  \"validation\": {\n    \"source\": \"payload\",\n    \"keys\": [\n      \"dateOfBirth\"\n    ]\n  },\n  \"x-humanapi-request-id\": \"fd05b02c-f527-4178-a907-42c2c3ac28c1\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "5f3faaa6-89e1-4bfa-9595-1f529b150174",
+              "name": "The token provided is invalid. It may have expired or may have been revoked.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "users"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"clientUserId\": \"whateverIdValueYouWant\",\n  \"clientUserEmail\": \"jane.doe@humanapi.co\",\n  \"firstName\": \"Jane\",\n  \"lastName\": \"Doe\",\n  \"dateOfBirth\": \"1968-02-13T00:00:00.000Z\",\n  \"autoInvite\": true\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 401,\n  \"error\": \"Unauthorized\",\n  \"message\": \"Cannot authenticate you with this token\",\n  \"x-humanapi-request-id\": \"05518ca2-1c9a-434e-8512-7284bbc54137\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "c855ab07-1faf-4132-8dc5-7e8f64f7a8a0",
+              "name": "The specified resource was not found (e.g. the id does not exist)",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "users"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"clientUserId\": \"whateverIdValueYouWant\",\n  \"clientUserEmail\": \"jane.doe@humanapi.co\",\n  \"firstName\": \"Jane\",\n  \"lastName\": \"Doe\",\n  \"dateOfBirth\": \"1968-02-13T00:00:00.000Z\",\n  \"autoInvite\": true\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 404,\n  \"error\": \"Not Found\",\n  \"message\": \"Not Found\",\n  \"x-humanapi-request-id\": \"05518ca2-1c9a-434e-8512-7284bbc54137\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "078c1350-2dbb-4aaa-9d92-dcfce28b1c1e",
+              "name": "There is a conflict with the specified resource (e.g. it may already exist)",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "users"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"clientUserId\": \"whateverIdValueYouWant\",\n  \"clientUserEmail\": \"jane.doe@humanapi.co\",\n  \"firstName\": \"Jane\",\n  \"lastName\": \"Doe\",\n  \"dateOfBirth\": \"1968-02-13T00:00:00.000Z\",\n  \"autoInvite\": true\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Conflict",
+              "code": 409,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 409,\n  \"error\": \"Conflict\",\n  \"message\": \"Unable to match the login of the new user to an existing user found for that user\",\n  \"x-humanapi-request-id\": \"05518ca2-1c9a-434e-8512-7284bbc54137\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "8bc47185-62cc-436d-a21a-f8c76b90944b",
+          "name": "perform Action For User",
+          "request": {
+            "name": "perform Action For User",
+            "description": {
+              "content": "Performs an action for a given user",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "v1",
+                "users",
+                "actions"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"action\": \"<string>\",\n  \"humanId\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "2a5c124c-3f36-4c54-a727-212249b082cf",
+              "name": "Request accepted",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "users",
+                    "actions"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"humanId\": \"123456789\",\n  \"action\": \"abort\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Accepted",
+              "code": 202,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "d9c3bd73-8e2f-4e83-a74f-b30298796939",
+              "name": "Cannot process input data",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "users",
+                    "actions"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"humanId\": \"123456789\",\n  \"action\": \"abort\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 400,\n  \"error\": \"Bad Request\",\n  \"message\": \"Bad Request\",\n  \"x-humanapi-request-id\": \"05518ca2-1c9a-434e-8512-7284bbc54137\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "3e6c3041-f2d8-482e-bb86-955dbdadd9e1",
+              "name": "The token provided is invalid. It may have expired or may have been revoked.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "users",
+                    "actions"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"humanId\": \"123456789\",\n  \"action\": \"abort\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 401,\n  \"error\": \"Unauthorized\",\n  \"message\": \"Cannot authenticate you with this token\",\n  \"x-humanapi-request-id\": \"05518ca2-1c9a-434e-8512-7284bbc54137\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "853f5124-5e61-43a4-8a94-426f77ddc291",
+              "name": "The specified resource was not found (e.g. the id does not exist)",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "users",
+                    "actions"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"humanId\": \"123456789\",\n  \"action\": \"abort\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 404,\n  \"error\": \"Not Found\",\n  \"message\": \"Not Found\",\n  \"x-humanapi-request-id\": \"05518ca2-1c9a-434e-8512-7284bbc54137\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "793ed1a7-6b29-4b8c-98c8-57e7b503b115",
+              "name": "Conflict -- the order is in a state where it can’t be aborted. (For example: Cancelled or Completed)",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "users",
+                    "actions"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"humanId\": \"123456789\",\n  \"action\": \"abort\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Conflict",
+              "code": 409,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 409,\n  \"error\": \"Conflict\",\n  \"message\": \"The order is in a state where it can’t be aborted\",\n  \"x-humanapi-request-id\": \"05518ca2-1c9a-434e-8512-7284bbc54137\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "7261567b-ff16-4696-a5ba-4659c682d49c",
+          "name": "get User Details",
+          "request": {
+            "name": "get User Details",
+            "description": {
+              "content": "Get the details of a specific user (by humanId)",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "v1",
+                "users",
+                ":humanId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "humanId",
+                  "description": "(Required) The humanId of the user"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "22dd0855-3fdd-4851-b980-bb45f8ab4352",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "users",
+                    ":humanId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "humanId",
+                      "description": "(Required) The humanId of the user"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"firstName\": \"Jane\",\n  \"lastName\": \"Smith\",\n  \"dateOfBirth\": \"1968-02-13T00:00:00.000Z\",\n  \"humanId\": \"f0e4cfc59516be96512c3d98e48b5abf\",\n  \"clientUserEmail\": \"jane@smith.com\",\n  \"clientUserId\": \"jane_smith_humanapi_connect\",\n  \"createdAt\": \"2025-02-06T12:00:00.000Z\",\n  \"updatedAt\": \"2025-02-06T12:00:00.000Z\",\n  \"status\": \"Invited\",\n  \"suggestedSources\": [\n    \"Starfleet Medical\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "87ad0a5d-2de4-4577-a17f-053f3bdeed6b",
+              "name": "The token provided is invalid. It may have expired or may have been revoked.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "users",
+                    ":humanId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "humanId",
+                      "description": "(Required) The humanId of the user"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 401,\n  \"error\": \"Unauthorized\",\n  \"message\": \"Cannot authenticate you with this token\",\n  \"x-humanapi-request-id\": \"05518ca2-1c9a-434e-8512-7284bbc54137\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "4666a3c1-846c-40d1-920d-17e4c6827e5a",
+              "name": "The specified resource was not found (e.g. the id does not exist)",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "users",
+                    ":humanId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "humanId",
+                      "description": "(Required) The humanId of the user"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 404,\n  \"error\": \"Not Found\",\n  \"message\": \"Not Found\",\n  \"x-humanapi-request-id\": \"05518ca2-1c9a-434e-8512-7284bbc54137\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "62a72f72-020e-402c-8b04-dda26741036c",
+          "name": "user Providers",
+          "request": {
+            "name": "user Providers",
+            "description": {
+              "content": "Retrieve the list of providers for a given user",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "v1",
+                "users",
+                "providers"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "humanId",
+                  "value": "<string>",
+                  "description": "The humanId of the user"
+                },
+                {
+                  "disabled": false,
+                  "key": "clientUserId",
+                  "value": "<string>",
+                  "description": "The clientUserId that the subscription is listening to"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "c054acfa-7382-4015-a346-8215fcd7006f",
+              "name": "Accepted",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "users",
+                    "providers"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "humanId",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "clientUserId",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"id\": \"string\",\n    \"name\": \"string\"\n  },\n  {\n    \"id\": \"string\",\n    \"name\": \"string\"\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "f0e7fb17-86dc-4117-b2dd-08e86510ce49",
+              "name": "Cannot process input data",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "users",
+                    "providers"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "humanId",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "clientUserId",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 400,\n  \"error\": \"Bad Request\",\n  \"message\": \"Bad Request\",\n  \"x-humanapi-request-id\": \"05518ca2-1c9a-434e-8512-7284bbc54137\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "c08a635f-9e44-46d9-93f7-8852ef7b3bab",
+              "name": "The token provided is invalid. It may have expired or may have been revoked.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "users",
+                    "providers"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "humanId",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "clientUserId",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 401,\n  \"error\": \"Unauthorized\",\n  \"message\": \"Cannot authenticate you with this token\",\n  \"x-humanapi-request-id\": \"05518ca2-1c9a-434e-8512-7284bbc54137\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "9a678963-ceec-42fc-8609-fffa91bd2013",
+              "name": "The specified resource was not found (e.g. the id does not exist)",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "users",
+                    "providers"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "humanId",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "clientUserId",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"code\": 404,\n  \"error\": \"Not Found\",\n  \"message\": \"Not Found\",\n  \"x-humanapi-request-id\": \"05518ca2-1c9a-434e-8512-7284bbc54137\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://admin.humanapi.co",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{bearerToken}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "32961161-1c76-4e88-9de7-935de53ae5e8",
+    "name": "admin users API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "You can use Admin API to create and manage your Human API users\n\nContact Support:\n Email: help@humanapi.co",
+      "type": "text/plain"
+    }
+  }
+}

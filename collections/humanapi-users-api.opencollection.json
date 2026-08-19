@@ -1,0 +1,129 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "admin users API",
+    "version": "1.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "users",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "getUsersList",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://admin.humanapi.co/api/v1/users",
+            "params": [
+              {
+                "name": "offset",
+                "value": "",
+                "type": "query",
+                "description": "The index of the first record to return"
+              },
+              {
+                "name": "humanId",
+                "value": "",
+                "type": "query",
+                "description": "The humanId of the user"
+              },
+              {
+                "name": "clientUserId",
+                "value": "",
+                "type": "query",
+                "description": "The clientUserId that the subscription is listening to"
+              }
+            ]
+          },
+          "docs": "Get the list of all active users"
+        },
+        {
+          "info": {
+            "name": "createUser",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://admin.humanapi.co/api/v1/users",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a new user"
+        },
+        {
+          "info": {
+            "name": "performActionForUser",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://admin.humanapi.co/api/v1/users/actions",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Performs an action for a given user"
+        },
+        {
+          "info": {
+            "name": "getUserDetails",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://admin.humanapi.co/api/v1/users/:humanId",
+            "params": [
+              {
+                "name": "humanId",
+                "value": "",
+                "type": "path",
+                "description": "The humanId of the user"
+              }
+            ]
+          },
+          "docs": "Get the details of a specific user (by humanId)"
+        },
+        {
+          "info": {
+            "name": "userProviders",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://admin.humanapi.co/api/v1/users/providers",
+            "params": [
+              {
+                "name": "humanId",
+                "value": "",
+                "type": "query",
+                "description": "The humanId of the user"
+              },
+              {
+                "name": "clientUserId",
+                "value": "",
+                "type": "query",
+                "description": "The clientUserId that the subscription is listening to"
+              }
+            ]
+          },
+          "docs": "Retrieve the list of providers for a given user"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

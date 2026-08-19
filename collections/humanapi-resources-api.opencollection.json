@@ -1,0 +1,39 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "admin resources API",
+    "version": "1.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "resources",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "getTasksLiistLink",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://admin.humanapi.co/api/v1/resources/consumer-link",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Fetch link to see order's tasks"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

@@ -47,3 +47,9 @@ tools:
 - name: getTasksLiistLink
   description: Fetch link to view an order's tasks
   source_operation: openapi/humanapi-admin-openapi.yml#getTasksLiistLink
+deployment:
+  mode: none
+  verified: derived
+  tools: 13
+  checked: '2026-08-12'
+  source: catalog MCP census
