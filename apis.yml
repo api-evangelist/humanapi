@@ -8,6 +8,18 @@ description: Human API is a health-intelligence platform that provides real-time
   client-credentials token endpoints. Human API was founded in 2013, backed by a16z, and acquired by LexisNexis
   Risk Solutions in 2021.
 url: https://raw.githubusercontent.com/api-evangelist/humanapi/refs/heads/main/apis.yml
+deliveryModel:
+  model: saas
+  open_source: false
+  commercial: true
+  callable_host: true
+  label: Hosted service · you call their endpoint
+  confidence: high
+  source:
+  - openapi
+  - pricing
+  generated: '2026-08-28'
+  method: derived
 accessModel:
   pricing: unknown
   onboarding: self-serve
