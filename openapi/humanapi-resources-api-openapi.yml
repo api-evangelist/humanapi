@@ -1,8 +1,8 @@
-openapi: 3.0.3
+openapi: 3.2.0
 info:
   description: You can use Admin API to create and manage your Human API users
   version: 1.0.0
-  title: admin resources API
+  title: Admin Resources API
   termsOfService: https://www.humanapi.co/developer-terms
   contact:
     email: help@humanapi.co
@@ -45,29 +45,6 @@ paths:
         '404':
           $ref: '#/components/responses/notFound'
 components:
-  responses:
-    notFound:
-      description: The specified resource was not found (e.g. the id does not exist)
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/error'
-          example:
-            code: 404
-            error: Not Found
-            message: Not Found
-            x-humanapi-request-id: 05518ca2-1c9a-434e-8512-7284bbc54137
-    unauthorized:
-      description: The token provided is invalid. It may have expired or may have been revoked.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/error'
-          example:
-            code: 401
-            error: Unauthorized
-            message: Cannot authenticate you with this token
-            x-humanapi-request-id: 05518ca2-1c9a-434e-8512-7284bbc54137
   schemas:
     link:
       type: object
@@ -75,13 +52,6 @@ components:
         consumerLink:
           type: string
         clientId:
-          type: string
-    userHumanIdOrClientUserId:
-      type: object
-      properties:
-        clientUserId:
-          type: string
-        humanId:
           type: string
     error:
       type: object
@@ -100,6 +70,36 @@ components:
           type: string
         x-humanapi-request-id:
           type: string
+    userHumanIdOrClientUserId:
+      type: object
+      properties:
+        clientUserId:
+          type: string
+        humanId:
+          type: string
+  responses:
+    unauthorized:
+      description: The token provided is invalid. It may have expired or may have been revoked.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/error'
+          example:
+            code: 401
+            error: Unauthorized
+            message: Cannot authenticate you with this token
+            x-humanapi-request-id: 05518ca2-1c9a-434e-8512-7284bbc54137
+    notFound:
+      description: The specified resource was not found (e.g. the id does not exist)
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/error'
+          example:
+            code: 404
+            error: Not Found
+            message: Not Found
+            x-humanapi-request-id: 05518ca2-1c9a-434e-8512-7284bbc54137
   securitySchemes:
     bearerAuth:
       type: http

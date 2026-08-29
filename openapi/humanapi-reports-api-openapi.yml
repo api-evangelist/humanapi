@@ -1,8 +1,8 @@
-openapi: 3.0.3
+openapi: 3.2.0
 info:
   description: You can use Admin API to create and manage your Human API users
   version: 1.0.0
-  title: admin reports API
+  title: Admin Reports API
   termsOfService: https://www.humanapi.co/developer-terms
   contact:
     email: help@humanapi.co
@@ -80,6 +80,38 @@ paths:
           $ref: '#/components/responses/notFound'
 components:
   schemas:
+    userReports:
+      type: object
+      additionalProperties: false
+      oneOf:
+      - $ref: '#/components/schemas/individualReportGroup'
+      - $ref: '#/components/schemas/combinedReportGroup'
+    error:
+      type: object
+      required:
+      - statusCode
+      - error
+      - message
+      - x-humanapi-request-id
+      properties:
+        code:
+          type: integer
+          format: int32
+        error:
+          type: string
+        message:
+          type: string
+        x-humanapi-request-id:
+          type: string
+    individualReportGroup:
+      type: object
+      properties:
+        name:
+          type: string
+        reports:
+          type: array
+          items:
+            $ref: '#/components/schemas/individualReportInfo'
     individualReportInfo:
       type: object
       properties:
@@ -93,8 +125,9 @@ components:
           format: date-time
           type: string
         createdByOrderId:
-          type: string
-          nullable: true
+          type:
+          - string
+          - 'null'
         orderIds:
           type: array
           items:
@@ -135,8 +168,9 @@ components:
           format: date-time
           type: string
         createdByOrderId:
-          type: string
-          nullable: true
+          type:
+          - string
+          - 'null'
         orderIds:
           type: array
           items:
@@ -153,46 +187,7 @@ components:
           type: string
           enum:
           - user_id
-    userReports:
-      type: object
-      additionalProperties: false
-      oneOf:
-      - $ref: '#/components/schemas/individualReportGroup'
-      - $ref: '#/components/schemas/combinedReportGroup'
-    error:
-      type: object
-      required:
-      - statusCode
-      - error
-      - message
-      - x-humanapi-request-id
-      properties:
-        code:
-          type: integer
-          format: int32
-        error:
-          type: string
-        message:
-          type: string
-        x-humanapi-request-id:
-          type: string
-    individualReportGroup:
-      type: object
-      properties:
-        name:
-          type: string
-        reports:
-          type: array
-          items:
-            $ref: '#/components/schemas/individualReportInfo'
   parameters:
-    humanIdQueryOptional:
-      name: humanId
-      in: query
-      description: The humanId of the user
-      required: false
-      schema:
-        type: string
     clientUserIdQueryOptional:
       name: clientUserId
       in: query
@@ -200,29 +195,13 @@ components:
       required: false
       schema:
         type: string
-  responses:
-    notFound:
-      description: The specified resource was not found (e.g. the id does not exist)
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/error'
-          example:
-            code: 404
-            error: Not Found
-            message: Not Found
-            x-humanapi-request-id: 05518ca2-1c9a-434e-8512-7284bbc54137
-    unauthorized:
-      description: The token provided is invalid. It may have expired or may have been revoked.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/error'
-          example:
-            code: 401
-            error: Unauthorized
-            message: Cannot authenticate you with this token
-            x-humanapi-request-id: 05518ca2-1c9a-434e-8512-7284bbc54137
+    humanIdQueryOptional:
+      name: humanId
+      in: query
+      description: The humanId of the user
+      required: false
+      schema:
+        type: string
   examples:
     userReports:
       value:
@@ -238,6 +217,29 @@ components:
           id: '0002'
           uri: <some-uri>
           createdAt: '2022-08-11T17:23:22.095Z'
+  responses:
+    unauthorized:
+      description: The token provided is invalid. It may have expired or may have been revoked.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/error'
+          example:
+            code: 401
+            error: Unauthorized
+            message: Cannot authenticate you with this token
+            x-humanapi-request-id: 05518ca2-1c9a-434e-8512-7284bbc54137
+    notFound:
+      description: The specified resource was not found (e.g. the id does not exist)
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/error'
+          example:
+            code: 404
+            error: Not Found
+            message: Not Found
+            x-humanapi-request-id: 05518ca2-1c9a-434e-8512-7284bbc54137
   securitySchemes:
     bearerAuth:
       type: http

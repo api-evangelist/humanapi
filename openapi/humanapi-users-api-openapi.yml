@@ -1,8 +1,8 @@
-openapi: 3.0.3
+openapi: 3.2.0
 info:
   description: You can use Admin API to create and manage your Human API users
   version: 1.0.0
-  title: admin users API
+  title: Admin Users API
   termsOfService: https://www.humanapi.co/developer-terms
   contact:
     email: help@humanapi.co
@@ -248,67 +248,79 @@ paths:
         '404':
           $ref: '#/components/responses/notFound'
 components:
-  responses:
-    invalidEntity:
-      description: There is a semantic error with the content of the request
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/errorInvalidInput'
-          example:
-            statusCode: 400
-            error: Bad Request
-            message: '"dateOfBirth" must be a valid date'
-            validation:
-              source: payload
-              keys:
-              - dateOfBirth
-            x-humanapi-request-id: fd05b02c-f527-4178-a907-42c2c3ac28c1
-    badRequest:
-      description: Cannot process input data
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/error'
-          example:
-            code: 400
-            error: Bad Request
-            message: Bad Request
-            x-humanapi-request-id: 05518ca2-1c9a-434e-8512-7284bbc54137
-    notFound:
-      description: The specified resource was not found (e.g. the id does not exist)
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/error'
-          example:
-            code: 404
-            error: Not Found
-            message: Not Found
-            x-humanapi-request-id: 05518ca2-1c9a-434e-8512-7284bbc54137
-    conflict:
-      description: There is a conflict with the specified resource (e.g. it may already exist)
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/error'
-          example:
-            code: 409
-            error: Conflict
-            message: Unable to match the login of the new user to an existing user found for that user
-            x-humanapi-request-id: 05518ca2-1c9a-434e-8512-7284bbc54137
-    unauthorized:
-      description: The token provided is invalid. It may have expired or may have been revoked.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/error'
-          example:
-            code: 401
-            error: Unauthorized
-            message: Cannot authenticate you with this token
-            x-humanapi-request-id: 05518ca2-1c9a-434e-8512-7284bbc54137
+  parameters:
+    humanIdPath:
+      name: humanId
+      in: path
+      description: The humanId of the user
+      required: true
+      schema:
+        type: string
+    humanIdQueryOptional:
+      name: humanId
+      in: query
+      description: The humanId of the user
+      required: false
+      schema:
+        type: string
+    clientUserIdQueryOptional:
+      name: clientUserId
+      in: query
+      description: The clientUserId that the subscription is listening to
+      required: false
+      schema:
+        type: string
+    offset:
+      name: offset
+      in: query
+      description: The index of the first record to return
+      required: false
+      schema:
+        type: integer
+        format: int32
+        default: 0
   schemas:
+    actionForUsersActionAttribute:
+      type: string
+      enum:
+      - resync
+      - abort
+    user:
+      type: object
+      additionalProperties: false
+      required:
+      - humanId
+      - clientUserEmail
+      - createdAt
+      - updatedAt
+      - status
+      properties:
+        firstName:
+          type: string
+        lastName:
+          type: string
+        dateOfBirth:
+          type: string
+          format: date-time
+          example: '1968-02-13T00:00:00.000Z'
+        humanId:
+          type: string
+        clientUserEmail:
+          type: string
+        createdAt:
+          type: string
+          format: date-time
+        updatedAt:
+          type: string
+          format: date-time
+        status:
+          type: string
+        suggestedSources:
+          type: array
+          items:
+            type: string
+        inviteLink:
+          type: string
     orderInfo:
       type: object
       properties:
@@ -322,6 +334,185 @@ components:
           type: string
         reportsAvailable:
           type: boolean
+    providersResponse:
+      type: array
+      items:
+        type: object
+        properties:
+          id:
+            type: string
+          name:
+            type: string
+    attachment:
+      type: object
+      additionalProperties: false
+      required:
+      - type
+      - contentType
+      - encoding
+      - content
+      properties:
+        type:
+          type: string
+        contentType:
+          type: string
+        encoding:
+          type: string
+        content:
+          type: string
+    actionForUserHumanId:
+      title: Action for user by humanId
+      type: object
+      required:
+      - action
+      - humanId
+      properties:
+        humanId:
+          type: string
+        action:
+          $ref: '#/components/schemas/actionForUsersActionAttribute'
+    errorInvalidInput:
+      type: object
+      required:
+      - statusCode
+      - error
+      - message
+      - validation
+      - x-humanapi-request-id
+      properties:
+        statusCode:
+          type: integer
+          format: int32
+        error:
+          type: string
+        message:
+          type: string
+        validation:
+          type: object
+          required:
+          - source
+          - keys
+          properties:
+            source:
+              type: string
+              enum:
+              - payload
+            keys:
+              type: array
+              items:
+                type: string
+        x-humanapi-request-id:
+          type: string
+    error:
+      type: object
+      required:
+      - statusCode
+      - error
+      - message
+      - x-humanapi-request-id
+      properties:
+        code:
+          type: integer
+          format: int32
+        error:
+          type: string
+        message:
+          type: string
+        x-humanapi-request-id:
+          type: string
+    actionForUserClientUserId:
+      title: Action for user by clientUserId
+      type: object
+      required:
+      - action
+      - clientUserId
+      properties:
+        clientUserId:
+          type: string
+        action:
+          $ref: '#/components/schemas/actionForUsersActionAttribute'
+    performActionForUser:
+      oneOf:
+      - $ref: '#/components/schemas/actionForUserHumanId'
+      - $ref: '#/components/schemas/actionForUserClientUserId'
+    provider:
+      type: object
+      additionalProperties: false
+      required:
+      - name
+      - address
+      properties:
+        name:
+          type: string
+        organizationName:
+          type: string
+        clientProviderId:
+          type: string
+        address:
+          $ref: '#/components/schemas/address'
+        phone:
+          type: string
+          pattern: ^(([()\- .]{0,2}\d){10})[()\- .]{0,2}$
+        fax:
+          type: string
+          pattern: ^(([()\- .]{0,2}\d){10})[()\- .]{0,2}$
+        mrn:
+          type: string
+        npi:
+          oneOf:
+          - type: string
+            minLength: 0
+          - type: number
+          description: This field can be a string, number, or an empty string.
+    orderInfoWithDataAvailable:
+      type: object
+      properties:
+        orderId:
+          type: string
+        orderType:
+          type: string
+        orderTypeAlias:
+          type: string
+        orderStatus:
+          type: string
+        reportsAvailable:
+          type: boolean
+        dataAvailable:
+          type: boolean
+    t11mUser:
+      type: object
+      additionalProperties: false
+      properties:
+        firstName:
+          type: string
+        lastName:
+          type: string
+        dateOfBirth:
+          type: string
+          format: date-time
+          example: '1968-02-13T00:00:00.000Z'
+        humanId:
+          type: string
+        clientUserId:
+          type: string
+        clientUserEmail:
+          type: string
+        createdAt:
+          type: string
+          format: date-time
+        updatedAt:
+          type: string
+          format: date-time
+        suggestedSources:
+          type: array
+          items:
+            type: string
+        orders:
+          type: array
+          items:
+            anyOf:
+            - $ref: '#/components/schemas/orderInfo'
+            - $ref: '#/components/schemas/orderInfoWithDataAvailable'
     newUser:
       type: object
       additionalProperties: false
@@ -397,172 +588,6 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/attachment'
-    t11mUser:
-      type: object
-      additionalProperties: false
-      properties:
-        firstName:
-          type: string
-        lastName:
-          type: string
-        dateOfBirth:
-          type: string
-          format: date-time
-          example: '1968-02-13T00:00:00.000Z'
-        humanId:
-          type: string
-        clientUserId:
-          type: string
-        clientUserEmail:
-          type: string
-        createdAt:
-          type: string
-          format: date-time
-        updatedAt:
-          type: string
-          format: date-time
-        suggestedSources:
-          type: array
-          items:
-            type: string
-        orders:
-          type: array
-          items:
-            anyOf:
-            - $ref: '#/components/schemas/orderInfo'
-            - $ref: '#/components/schemas/orderInfoWithDataAvailable'
-    actionForUserClientUserId:
-      title: Action for user by clientUserId
-      type: object
-      required:
-      - action
-      - clientUserId
-      properties:
-        clientUserId:
-          type: string
-        action:
-          $ref: '#/components/schemas/actionForUsersActionAttribute'
-    user:
-      type: object
-      additionalProperties: false
-      required:
-      - humanId
-      - clientUserEmail
-      - createdAt
-      - updatedAt
-      - status
-      properties:
-        firstName:
-          type: string
-        lastName:
-          type: string
-        dateOfBirth:
-          type: string
-          format: date-time
-          example: '1968-02-13T00:00:00.000Z'
-        humanId:
-          type: string
-        clientUserEmail:
-          type: string
-        createdAt:
-          type: string
-          format: date-time
-        updatedAt:
-          type: string
-          format: date-time
-        status:
-          type: string
-        suggestedSources:
-          type: array
-          items:
-            type: string
-        inviteLink:
-          type: string
-    actionForUserHumanId:
-      title: Action for user by humanId
-      type: object
-      required:
-      - action
-      - humanId
-      properties:
-        humanId:
-          type: string
-        action:
-          $ref: '#/components/schemas/actionForUsersActionAttribute'
-    provider:
-      type: object
-      additionalProperties: false
-      required:
-      - name
-      - address
-      properties:
-        name:
-          type: string
-        organizationName:
-          type: string
-        clientProviderId:
-          type: string
-        address:
-          $ref: '#/components/schemas/address'
-        phone:
-          type: string
-          pattern: ^(([()\- .]{0,2}\d){10})[()\- .]{0,2}$
-        fax:
-          type: string
-          pattern: ^(([()\- .]{0,2}\d){10})[()\- .]{0,2}$
-        mrn:
-          type: string
-        npi:
-          oneOf:
-          - type: string
-            minLength: 0
-          - type: number
-          description: This field can be a string, number, or an empty string.
-    performActionForUser:
-      oneOf:
-      - $ref: '#/components/schemas/actionForUserHumanId'
-      - $ref: '#/components/schemas/actionForUserClientUserId'
-    errorInvalidInput:
-      type: object
-      required:
-      - statusCode
-      - error
-      - message
-      - validation
-      - x-humanapi-request-id
-      properties:
-        statusCode:
-          type: integer
-          format: int32
-        error:
-          type: string
-        message:
-          type: string
-        validation:
-          type: object
-          required:
-          - source
-          - keys
-          properties:
-            source:
-              type: string
-              enum:
-              - payload
-            keys:
-              type: array
-              items:
-                type: string
-        x-humanapi-request-id:
-          type: string
-    providersResponse:
-      type: array
-      items:
-        type: object
-        properties:
-          id:
-            type: string
-          name:
-            type: string
     address:
       type: object
       additionalProperties: false
@@ -582,74 +607,24 @@ components:
           type: string
         zip:
           type: integer
-    error:
-      type: object
-      required:
-      - statusCode
-      - error
-      - message
-      - x-humanapi-request-id
-      properties:
-        code:
-          type: integer
-          format: int32
-        error:
-          type: string
-        message:
-          type: string
-        x-humanapi-request-id:
-          type: string
-    orderInfoWithDataAvailable:
-      type: object
-      properties:
-        orderId:
-          type: string
-        orderType:
-          type: string
-        orderTypeAlias:
-          type: string
-        orderStatus:
-          type: string
-        reportsAvailable:
-          type: boolean
-        dataAvailable:
-          type: boolean
-    actionForUsersActionAttribute:
-      type: string
-      enum:
-      - resync
-      - abort
-    attachment:
-      type: object
-      additionalProperties: false
-      required:
-      - type
-      - contentType
-      - encoding
-      - content
-      properties:
-        type:
-          type: string
-        contentType:
-          type: string
-        encoding:
-          type: string
-        content:
-          type: string
   examples:
-    nonT11mUser:
+    t11mUser:
       value:
         firstName: Jane
         lastName: Smith
         dateOfBirth: '1968-02-13T00:00:00.000Z'
-        humanId: f0e4cfc59516be96512c3d98e48b5abf
+        humanId: c1dc2ca616164a37b9ae5bf9f3c8884d
         clientUserEmail: jane@smith.com
-        clientUserId: jane_smith_humanapi_connect
+        clientUserId: jane_smith_health_intelligence
         createdAt: '2025-02-06T12:00:00.000Z'
         updatedAt: '2025-02-06T12:00:00.000Z'
-        status: Invited
         suggestedSources:
         - Starfleet Medical
+        orders:
+        - orderId: 2e9d2eaf-39c9-4182-a6fc-b076f99c75d9
+          orderType: default
+          orderStatus: Pended
+          reportsAvailable: false
     t11mUserWithDataAvailable:
       value:
         firstName: Jane
@@ -668,54 +643,79 @@ components:
           orderStatus: Completed
           reportsAvailable: true
           dataAvailable: true
-    t11mUser:
+    nonT11mUser:
       value:
         firstName: Jane
         lastName: Smith
         dateOfBirth: '1968-02-13T00:00:00.000Z'
-        humanId: c1dc2ca616164a37b9ae5bf9f3c8884d
+        humanId: f0e4cfc59516be96512c3d98e48b5abf
         clientUserEmail: jane@smith.com
-        clientUserId: jane_smith_health_intelligence
+        clientUserId: jane_smith_humanapi_connect
         createdAt: '2025-02-06T12:00:00.000Z'
         updatedAt: '2025-02-06T12:00:00.000Z'
+        status: Invited
         suggestedSources:
         - Starfleet Medical
-        orders:
-        - orderId: 2e9d2eaf-39c9-4182-a6fc-b076f99c75d9
-          orderType: default
-          orderStatus: Pended
-          reportsAvailable: false
-  parameters:
-    clientUserIdQueryOptional:
-      name: clientUserId
-      in: query
-      description: The clientUserId that the subscription is listening to
-      required: false
-      schema:
-        type: string
-    offset:
-      name: offset
-      in: query
-      description: The index of the first record to return
-      required: false
-      schema:
-        type: integer
-        format: int32
-        default: 0
-    humanIdQueryOptional:
-      name: humanId
-      in: query
-      description: The humanId of the user
-      required: false
-      schema:
-        type: string
-    humanIdPath:
-      name: humanId
-      in: path
-      description: The humanId of the user
-      required: true
-      schema:
-        type: string
+  responses:
+    notFound:
+      description: The specified resource was not found (e.g. the id does not exist)
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/error'
+          example:
+            code: 404
+            error: Not Found
+            message: Not Found
+            x-humanapi-request-id: 05518ca2-1c9a-434e-8512-7284bbc54137
+    invalidEntity:
+      description: There is a semantic error with the content of the request
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/errorInvalidInput'
+          example:
+            statusCode: 400
+            error: Bad Request
+            message: '"dateOfBirth" must be a valid date'
+            validation:
+              source: payload
+              keys:
+              - dateOfBirth
+            x-humanapi-request-id: fd05b02c-f527-4178-a907-42c2c3ac28c1
+    conflict:
+      description: There is a conflict with the specified resource (e.g. it may already exist)
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/error'
+          example:
+            code: 409
+            error: Conflict
+            message: Unable to match the login of the new user to an existing user found for that user
+            x-humanapi-request-id: 05518ca2-1c9a-434e-8512-7284bbc54137
+    unauthorized:
+      description: The token provided is invalid. It may have expired or may have been revoked.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/error'
+          example:
+            code: 401
+            error: Unauthorized
+            message: Cannot authenticate you with this token
+            x-humanapi-request-id: 05518ca2-1c9a-434e-8512-7284bbc54137
+    badRequest:
+      description: Cannot process input data
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/error'
+          example:
+            code: 400
+            error: Bad Request
+            message: Bad Request
+            x-humanapi-request-id: 05518ca2-1c9a-434e-8512-7284bbc54137
   securitySchemes:
     bearerAuth:
       type: http

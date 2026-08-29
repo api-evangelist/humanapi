@@ -1,26 +1,38 @@
 {
   "provider": "humanapi",
   "sources": [
-    "humanapi-admin-api-openapi.yml",
-    "humanapi-connect-api-openapi.yml",
-    "humanapi-orders-api-openapi.yml",
-    "humanapi-reports-api-openapi.yml",
-    "humanapi-resources-api-openapi.yml",
-    "humanapi-subscriptions-api-openapi.yml",
-    "humanapi-users-api-openapi.yml"
+    "_original/humanapi-admin-openapi.yml",
+    "_original/humanapi-auth-openapi.yml"
   ],
   "outputs": [
-    "humanapi-admin-api-openapi.yml",
-    "humanapi-connect-api-openapi.yml",
     "humanapi-orders-api-openapi.yml",
     "humanapi-reports-api-openapi.yml",
     "humanapi-resources-api-openapi.yml",
     "humanapi-subscriptions-api-openapi.yml",
-    "humanapi-users-api-openapi.yml"
+    "humanapi-users-api-openapi.yml",
+    "humanapi-admin-api-openapi.yml",
+    "humanapi-connect-api-openapi.yml"
   ],
   "archived": [],
   "errors": [],
   "warnings": [],
-  "notes": [],
-  "skipped": []
+  "notes": [
+    "sourced from openapi/_original/ (2 archived document(s)); previously refined output at the top level was skipped rather than re-split",
+    "humanapi-admin-openapi.yml: upgraded openapi 3.0.3 -> OpenAPI 3.2.0",
+    "humanapi-admin-openapi.yml: declared missing tag: reports",
+    "humanapi-admin-openapi.yml: declared missing tag: resources",
+    "humanapi-admin-openapi.yml: declared missing tag: subscriptions",
+    "humanapi-admin-openapi.yml: declared missing tag: users",
+    "humanapi-auth-openapi.yml: upgraded openapi 3.0.3 -> OpenAPI 3.2.0",
+    "humanapi-auth-openapi.yml: declared missing tag: connect"
+  ],
+  "skipped": [
+    "humanapi-admin-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "humanapi-connect-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "humanapi-orders-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "humanapi-reports-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "humanapi-resources-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "humanapi-subscriptions-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "humanapi-users-api-openapi.yml: previously refined output, superseded by openapi/_original/"
+  ]
 }
